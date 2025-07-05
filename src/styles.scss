@@ -12,6 +12,13 @@
   --deskbird-font: 'Inter', Arial, sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   font-family: var(--deskbird-font);
   // color: var(--deskbird-secondary);
@@ -40,8 +47,26 @@ body {
   }
 }
 
-.signup-button,
+.login-card {
+  .p-card-body {
+    .p-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    .p-card-body {
+      min-width: 500px;
+    }
+  }
+}
+
+.action-button,
 .p-button.p-component {
   width: 100% !important;
-  display: block !important;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }

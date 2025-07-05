@@ -1,8 +1,10 @@
 .login-primeng-bg {
   min-height: 100vh;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
 }
 
 .login-primeng-center {
