@@ -7,6 +7,14 @@
 
   <div class="p-m-4">
     <p-card header="Content Section">
+      <div class="mb-4">
+        <strong>API Status:</strong>
+        <span [class]="apiStatus === 'Connected' ? 'text-green-600' : 'text-red-600'">
+          {{ apiStatus }}
+        </span>
+        <br>
+        <small class="text-gray-600">API URL: {{ environment.apiBaseUrl }}</small>
+      </div>
       <router-outlet></router-outlet>
     </p-card>
   </div>
