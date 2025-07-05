@@ -12,8 +12,11 @@ export function HttpRequestInterceptor(
   request: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  // Get token from localStorage
-  const token = localStorage.getItem('auth_token');
+  // Get token from localStorage (only in browser environment)
+  let token: string | null = null;
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    token = localStorage.getItem('auth_token');
+  }
 
   // Clone the request and add headers
   let modifiedRequest = request.clone({
@@ -33,7 +36,7 @@ export function HttpRequestInterceptor(
     });
   }
 
-  if (environment.enableDebug) {
+  if (environment.enableDebug && typeof window !== 'undefined') {
     console.log('API Request:', {
       url: modifiedRequest.url,
       method: modifiedRequest.method,
@@ -43,14 +46,13 @@ export function HttpRequestInterceptor(
 
   return next(modifiedRequest).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (environment.enableDebug) {
+      if (environment.enableDebug && typeof window !== 'undefined') {
         console.error('HTTP Error:', error);
       }
 
-      // Handle 401 Unauthorized - redirect to login
-      if (error.status === 401) {
+      // Handle 401 Unauthorized - redirect to login (only in browser)
+      if (error.status === 401 && typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
         localStorage.removeItem('auth_token');
-        // You can add navigation to login here if needed
         // this.router.navigate(['/login']);
       }
 
