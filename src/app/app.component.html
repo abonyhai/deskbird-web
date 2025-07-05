@@ -1,13 +1,15 @@
-<p-menubar [model]="menubarItems">
-  <ng-template pTemplate="start">
-    <span class="font-bold text-xl">My App</span>
-  </ng-template>
-</p-menubar>
 
-<div class="p-m-4">
-  <p-card header="Content Section">
-    <p>This is your main content area. Replace this with your app content.</p>
-  </p-card>
-</div>
+<ng-container *transloco="let t">
+  <p-menubar [model]="menubarItems">
+    <ng-template pTemplate="start">
+      <span class="font-bold text-xl">{{ t('DEMO') }}</span>
+    </ng-template>
+  </p-menubar>
 
-<router-outlet />
+  <div class="p-m-4">
+    <p-card header="Content Section">
+      <p>This is your main content area. Replace this with your app content.</p>
+    </p-card>
+  </div>
+
+</ng-container>

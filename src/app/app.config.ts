@@ -7,6 +7,9 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
+import { provideTransloco } from '@ngneat/transloco';
+import { TranslocoHttpLoader } from './transloco.loader';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +18,16 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideStore(),
     provideEffects(),
-    providePrimeNG({ theme: { preset: Lara } })
-  ]
+    provideHttpClient(),
+    providePrimeNG({ theme: { preset: Lara } }),
+    provideTransloco({
+      config: {
+        availableLangs: ['en'],
+        defaultLang: 'en',
+        // Remove this option if your application doesn't support changing language in runtime.
+        reRenderOnLangChange: true,
+      },
+      loader: TranslocoHttpLoader,
+    }),
+  ],
 };
