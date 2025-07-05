@@ -1,0 +1,13 @@
+<ng-container *transloco="let t">
+  <p-menubar [model]="menubarItems">
+    <ng-template pTemplate="start">
+      <span class="font-bold text-xl">{{ t('DEMO') }}</span>
+    </ng-template>
+  </p-menubar>
+
+  <div class="p-m-4">
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-container>
