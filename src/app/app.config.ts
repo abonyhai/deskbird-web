@@ -25,9 +25,10 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Lara,
         options: {
-          colorScheme: 'purple'
-        }
-      }
+          // todo check why color not changing
+          colorScheme: 'blue',
+        },
+      },
     }),
     provideTransloco({
       config: {
