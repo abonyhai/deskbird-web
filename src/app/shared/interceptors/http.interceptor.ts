@@ -18,23 +18,21 @@ export function HttpRequestInterceptor(
     token = localStorage.getItem('auth_token');
   }
 
-  // Clone the request and add headers
-  let modifiedRequest = request.clone({
-    setHeaders: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  });
+  // Prepare headers
+  let setHeaders: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
 
   // Add authorization header if token exists
   if (token) {
-    modifiedRequest = modifiedRequest.clone({
-      setHeaders: {
-        ...modifiedRequest.headers,
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    setHeaders['Authorization'] = `Bearer ${token}`;
   }
+
+  // Clone the request and add headers
+  const modifiedRequest = request.clone({
+    setHeaders
+  });
 
   if (environment.enableDebug && typeof window !== 'undefined') {
     console.log('API Request:', {
