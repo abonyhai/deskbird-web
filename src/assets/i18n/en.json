@@ -41,6 +41,17 @@
       "CREATE_ACCOUNT_BUTTON": "Create Account",
       "ALREADY_HAVE_ACCOUNT": "Already have an account?",
       "SIGN_IN_LINK": "Sign In"
+    },
+    "FORGOT": {
+      "TITLE": "Forgot Password",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "EMAIL_REQUIRED": "Email is required.",
+      "EMAIL_INVALID": "Please enter a valid email address.",
+      "SEND_RESET_LINK": "Send Reset Link",
+      "CHECK_EMAIL_TITLE": "Check Your Email",
+      "CHECK_EMAIL_MESSAGE": "We've sent a password reset link to your email address.",
+      "BACK_TO_LOGIN": "Back to Login"
     }
   }
 }
