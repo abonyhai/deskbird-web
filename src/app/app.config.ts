@@ -9,7 +9,8 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { provideTransloco } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from './transloco.loader';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpRequestInterceptor } from './shared/interceptors/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideStore(),
     provideEffects(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([HttpRequestInterceptor])),
     providePrimeNG({ theme: { preset: Lara } }),
     provideTransloco({
       config: {
