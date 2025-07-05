@@ -1,1 +1,149 @@
-<p>signup works!</p>
+<ng-container *transloco="let t">
+  <div class="flex justify-content-center align-items-center min-h-screen">
+    <div class="w-full max-w-md">
+      <p-card header="Create Account" styleClass="shadow-2">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="p-fluid">
+          <div class="grid">
+            <div class="col-6">
+              <div class="mb-3">
+                <label for="firstName" class="block text-900 font-medium mb-2">First Name</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                  placeholder="First Name"
+                  [class.ng-invalid]="firstNameControl?.invalid && firstNameControl?.touched"
+                  [class.ng-dirty]="firstNameControl?.dirty">
+
+                @if (firstNameControl?.invalid && firstNameControl?.touched) {
+                  <small class="p-error">
+                    @if (firstNameControl?.errors?.['required']) {
+                      First name is required.
+                    } @else if (firstNameControl?.errors?.['minlength']) {
+                      First name must be at least 2 characters.
+                    }
+                  </small>
+                }
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="mb-3">
+                <label for="lastName" class="block text-900 font-medium mb-2">Last Name</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                  placeholder="Last Name"
+                  [class.ng-invalid]="lastNameControl?.invalid && lastNameControl?.touched"
+                  [class.ng-dirty]="lastNameControl?.dirty">
+
+                @if (lastNameControl?.invalid && lastNameControl?.touched) {
+                  <small class="p-error">
+                    @if (lastNameControl?.errors?.['required']) {
+                      Last name is required.
+                    } @else if (lastNameControl?.errors?.['minlength']) {
+                      Last name must be at least 2 characters.
+                    }
+                  </small>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="block text-900 font-medium mb-2">Email</label>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Enter your email"
+              [class.ng-invalid]="emailControl?.invalid && emailControl?.touched"
+              [class.ng-dirty]="emailControl?.dirty">
+
+            @if (emailControl?.invalid && emailControl?.touched) {
+              <small class="p-error">
+                @if (emailControl?.errors?.['required']) {
+                  Email is required.
+                } @else if (emailControl?.errors?.['email']) {
+                  Please enter a valid email address.
+                }
+              </small>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="block text-900 font-medium mb-2">Password</label>
+            <p-password
+              id="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              [toggleMask]="true"
+              [feedback]="true"
+              [class.ng-invalid]="passwordControl?.invalid && passwordControl?.touched"
+              [class.ng-dirty]="passwordControl?.dirty">
+            </p-password>
+
+            @if (passwordControl?.invalid && passwordControl?.touched) {
+              <small class="p-error">
+                @if (passwordControl?.errors?.['required']) {
+                  Password is required.
+                } @else if (passwordControl?.errors?.['minlength']) {
+                  Password must be at least 6 characters.
+                }
+              </small>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="confirmPassword" class="block text-900 font-medium mb-2">Confirm Password</label>
+            <p-password
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Confirm your password"
+              [toggleMask]="true"
+              [feedback]="false"
+              [class.ng-invalid]="(confirmPasswordControl?.invalid || passwordMismatchError) && confirmPasswordControl?.touched"
+              [class.ng-dirty]="confirmPasswordControl?.dirty">
+            </p-password>
+
+            @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched) {
+              <small class="p-error">
+                @if (confirmPasswordControl?.errors?.['required']) {
+                  Please confirm your password.
+                }
+              </small>
+            }
+
+            @if (passwordMismatchError) {
+              <small class="p-error">
+                Passwords do not match.
+              </small>
+            }
+          </div>
+
+          <p-button
+            type="submit"
+            label="Create Account"
+            icon="pi pi-user-plus"
+            [loading]="isLoading"
+            [disabled]="signupForm.invalid || isLoading"
+            styleClass="w-full">
+          </p-button>
+        </form>
+
+        <div class="text-center mt-3">
+          <span class="text-gray-600">Already have an account?</span>
+          <a routerLink="/login" class="text-blue-600 hover:text-blue-800 no-underline ml-1">
+            Sign In
+          </a>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <p-toast></p-toast>
+</ng-container>

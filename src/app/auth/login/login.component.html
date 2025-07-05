@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="login-primeng-bg">
+  <div class="login-primeng-center">
+    <p-card styleClass="p-p-4 p-d-flex p-flex-column p-ai-center" [style.width]="'400px'">
+      <div class="p-d-flex p-flex-column p-ai-center p-mb-3">
+        <img src="assets/images/logo-deskbird.png" alt="Deskbird Logo" width="48" height="48" class="p-mb-2" />
+        <h2 class="p-mb-1">Welcome to PrimeLand!</h2>
+        <span class="p-text-secondary">Sign in to continue</span>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-fluid">
+        <div class="p-field p-mb-3">
+          <label for="email" class="p-mb-1">Email</label>
+          <input id="email" type="email" pInputText formControlName="email" placeholder="Email address" autocomplete="username" />
+          @if (emailControl?.invalid && emailControl?.touched) {
+            <small class="p-error">
+              @if (emailControl?.errors?.['required']) { Email is required. }
+              @if (emailControl?.errors?.['email']) { Please enter a valid email. }
+            </small>
+          }
+        </div>
+        <div class="p-field p-mb-3">
+          <label for="password" class="p-mb-1">Password</label>
+          <p-password id="password" formControlName="password" placeholder="Password" [feedback]="false" autocomplete="current-password"></p-password>
+          @if (passwordControl?.invalid && passwordControl?.touched) {
+            <small class="p-error">
+              @if (passwordControl?.errors?.['required']) { Password is required. }
+              @if (passwordControl?.errors?.['minlength']) { Password must be at least 6 characters. }
+            </small>
+          }
+        </div>
+        <div class="p-d-flex p-ai-center p-jc-between p-mb-3">
+          <a routerLink="/forgot-password" class="p-text-primary">Forgot password?</a>
+        </div>
+        <p-button type="submit" label="Sign In" class="p-mb-2" [loading]="isLoading" [disabled]="loginForm.invalid || isLoading"></p-button>
+        <div class="p-text-center p-mt-2">
+          <span>Don't have an account?</span>
+          <a routerLink="/signup" class="p-ml-2 p-text-primary">Sign up</a>
+        </div>
+      </form>
+    </p-card>
+    <p-toast></p-toast>
+  </div>
+</div>
