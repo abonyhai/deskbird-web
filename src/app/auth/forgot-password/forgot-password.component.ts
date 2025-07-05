@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
     TranslocoModule,
     CommonModule,
     RouterModule,
+    AuthLayoutComponent,
   ],
   providers: [MessageService],
   templateUrl: './forgot-password.component.html',

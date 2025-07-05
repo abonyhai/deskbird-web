@@ -1,83 +1,64 @@
 <ng-container *transloco="let t">
-  <div class="login-primeng-bg">
-    <div class="login-primeng-center">
-      <p-card class="p-4 flex flex-column align-items-center w-full login-card">
-        <div class="flex flex-column align-items-center mb-3 w-full">
-          <img
-            src="assets/images/logo-deskbird.png"
-            alt="{{ t('AUTH.LOGIN.LOGO_ALT') }}"
-            width="250"
-            height="250"
-            class="mb-2 logo"
-          />
-          <h2 class="mb-1">{{ t('AUTH.LOGIN.WELCOME_TITLE') }}</h2>
+  <app-auth-layout [title]="t('AUTH.LOGIN.WELCOME_TITLE')">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="flex flex-column field mb-3 w-full">
+        <label for="email" class="mb-1">{{ t('AUTH.LOGIN.EMAIL_LABEL') }}</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          [placeholder]="t('AUTH.LOGIN.EMAIL_PLACEHOLDER')"
+          autocomplete="username"
+        />
+        @if (emailControl?.invalid && emailControl?.touched) {
+          <small class="p-error">
+            @if (emailControl?.errors?.['required']) {
+              {{ t('AUTH.LOGIN.EMAIL_REQUIRED') }}
+            }
+            @if (emailControl?.errors?.['email']) {
+              {{ t('AUTH.LOGIN.EMAIL_INVALID') }}
+            }
+          </small>
+        }
+      </div>
+      <div class="flex flex-column field mb-3 w-full">
+        <label for="password" class="mb-1">{{ t('AUTH.LOGIN.PASSWORD_LABEL') }}</label>
+        <p-password
+          id="password"
+          formControlName="password"
+          [placeholder]="t('AUTH.LOGIN.PASSWORD_PLACEHOLDER')"
+          [feedback]="false"
+          autocomplete="current-password"
+          class="w-full full-width-pass-input"
+          [inputStyle]="{ width: '100%' }"
+        ></p-password>
+        @if (passwordControl?.invalid && passwordControl?.touched) {
+          <small class="p-error">
+            @if (passwordControl?.errors?.['required']) {
+              {{ t('AUTH.LOGIN.PASSWORD_REQUIRED') }}
+            }
+            @if (passwordControl?.errors?.['minlength']) {
+              {{ t('AUTH.LOGIN.PASSWORD_MIN_LENGTH') }}
+            }
+          </small>
+        }
+      </div>
+      <div class="flex flex-column align-items-center justify-content-center mb-3 w-full gap-3">
+        <a routerLink="/forgot-password" class="text-primary w-full">{{ t('AUTH.LOGIN.FORGOT_PASSWORD') }}</a>
+        <p-button
+          type="submit"
+          [label]="t('AUTH.LOGIN.SIGN_IN_BUTTON')"
+          class="mb-2 w-full action-button"
+          [loading]="isLoading"
+          [disabled]="loginForm.invalid || isLoading"
+        ></p-button>
+        <div class="text-center mt-2 w-full">
+          <span>{{ t('AUTH.LOGIN.NO_ACCOUNT_TEXT') }}</span>
+          <a routerLink="/signup" class="ml-2 text-primary">{{ t('AUTH.LOGIN.SIGN_UP_LINK') }}</a>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full">
-          <div class="flex flex-column field mb-3 w-full">
-            <label for="email" class="mb-1">{{ t('AUTH.LOGIN.EMAIL_LABEL') }}</label>
-            <input
-              id="email"
-              type="email"
-              pInputText
-              formControlName="email"
-              [placeholder]="t('AUTH.LOGIN.EMAIL_PLACEHOLDER')"
-              autocomplete="username"
-            />
-            @if (emailControl?.invalid && emailControl?.touched) {
-              <small class="p-error">
-                @if (emailControl?.errors?.['required']) {
-                  {{ t('AUTH.LOGIN.EMAIL_REQUIRED') }}
-                }
-                @if (emailControl?.errors?.['email']) {
-                  {{ t('AUTH.LOGIN.EMAIL_INVALID') }}
-                }
-              </small>
-            }
-          </div>
-          <div class="flex flex-column field mb-3 w-full">
-            <label for="password" class="mb-1">{{ t('AUTH.LOGIN.PASSWORD_LABEL') }}</label>
-            <p-password
-              id="password"
-              formControlName="password"
-              [placeholder]="t('AUTH.LOGIN.PASSWORD_PLACEHOLDER')"
-              [feedback]="false"
-              autocomplete="current-password"
-              class="w-full full-width-pass-input"
-              [inputStyle]="{ width: '100%' }"
-            ></p-password>
-            @if (passwordControl?.invalid && passwordControl?.touched) {
-              <small class="p-error">
-                @if (passwordControl?.errors?.['required']) {
-                  {{ t('AUTH.LOGIN.PASSWORD_REQUIRED') }}
-                }
-                @if (passwordControl?.errors?.['minlength']) {
-                  {{ t('AUTH.LOGIN.PASSWORD_MIN_LENGTH') }}
-                }
-              </small>
-            }
-          </div>
-          <div class="flex flex-column align-items-center justify-content-center mb-3 w-full gap-3">
-            <a routerLink="/forgot-password" class="text-primary w-full">{{
-              t('AUTH.LOGIN.FORGOT_PASSWORD')
-            }}</a>
-            <p-button
-              type="submit"
-              [label]="t('AUTH.LOGIN.SIGN_IN_BUTTON')"
-              class="mb-2 w-full action-button"
-              [loading]="isLoading"
-              [disabled]="loginForm.invalid || isLoading"
-            ></p-button>
-
-            <div class="text-center mt-2 w-full">
-              <span>{{ t('AUTH.LOGIN.NO_ACCOUNT_TEXT') }}</span>
-              <a routerLink="/signup" class="ml-2 text-primary">{{
-                t('AUTH.LOGIN.SIGN_UP_LINK')
-              }}</a>
-            </div>
-          </div>
-        </form>
-      </p-card>
-      <p-toast></p-toast>
-    </div>
-  </div>
+      </div>
+    </form>
+    <p-toast></p-toast>
+  </app-auth-layout>
 </ng-container>

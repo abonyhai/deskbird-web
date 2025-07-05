@@ -11,6 +11,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { RegisterRequest } from '../models/register-request.model';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-signup',
@@ -25,6 +26,7 @@ import { RegisterRequest } from '../models/register-request.model';
     TranslocoModule,
     CommonModule,
     RouterModule,
+    AuthLayoutComponent,
   ],
   providers: [MessageService],
   templateUrl: './signup.component.html',
