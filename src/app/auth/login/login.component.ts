@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { LoginRequest } from '../models/login-request.model';
 import { ApiResponse } from '../../shared/models/common.models';
 import { AuthResponse } from '../models/auth.models';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import { AuthResponse } from '../models/auth.models';
     InputTextModule,
     PasswordModule,
     ToastModule,
+    TranslocoModule,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',

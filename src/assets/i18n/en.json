@@ -1,3 +1,20 @@
 {
-  "DEMO": "Demo translated token"
+  "AUTH": {
+    "LOGIN": {
+      "LOGO_ALT": "Deskbird Logo",
+      "WELCOME_TITLE": "WAZAAAAAAP",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Email address",
+      "EMAIL_REQUIRED": "Email is required.",
+      "EMAIL_INVALID": "Please enter a valid email.",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Password",
+      "PASSWORD_REQUIRED": "Password is required.",
+      "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SIGN_IN_BUTTON": "Sign In",
+      "NO_ACCOUNT_TEXT": "Don't have an account?",
+      "SIGN_UP_LINK": "Sign up"
+    }
+  }
 }

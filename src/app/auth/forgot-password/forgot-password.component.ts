@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     InputTextModule,
     ButtonModule,
     MessageModule,
+    ToastModule,
     ReactiveFormsModule,
     TranslocoModule,
     CommonModule,

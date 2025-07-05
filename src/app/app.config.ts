@@ -21,7 +21,14 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideEffects(),
     provideHttpClient(withInterceptors([HttpRequestInterceptor])),
-    providePrimeNG({ theme: { preset: Lara } }),
+    providePrimeNG({
+      theme: {
+        preset: Lara,
+        options: {
+          colorScheme: 'purple'
+        }
+      }
+    }),
     provideTransloco({
       config: {
         availableLangs: ['en'],
