@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
 import { RouterOutlet } from '@angular/router';
@@ -10,6 +10,7 @@ import { TranslocoModule } from '@ngneat/transloco';
   imports: [MenubarModule, CardModule, RouterOutlet, TranslocoModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'deskbird-web';
