@@ -1,5 +1,7 @@
 .content-container {
-  min-height:fit-content;
+  // min-height: fit-content;
+  height: 90vh;
+  overflow: auto;
 }
 
 .navbar-logo {

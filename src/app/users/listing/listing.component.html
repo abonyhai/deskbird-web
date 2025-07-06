@@ -12,7 +12,7 @@
       <div class="p-error my-3 text-center">{{ error }}</div>
     }
     @if (users) {
-      <p-table [value]="users" [paginator]="true" [rows]="5">
+      <p-table [value]="users" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
