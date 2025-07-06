@@ -1,20 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
+import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { TranslocoModule } from '@ngneat/transloco';
-import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { RegisterRequest } from '../models/register-request.model';
-import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 import * as AuthActions from '../../store/auth/auth.actions';
 import * as AuthSelectors from '../../store/auth/auth.selectors';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { RegisterRequest } from '../models/register-request.model';
 
 @Component({
   selector: 'app-signup',
@@ -45,7 +45,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly store: Store,
-    private readonly router: Router,
     private readonly messageService: MessageService,
   ) {
     this.isLoading$ = this.store.select(AuthSelectors.selectAuthLoading);
@@ -84,13 +83,16 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.signupForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-    }, { validators: this.passwordMatchValidator });
+    this.signupForm = this.formBuilder.group(
+      {
+        firstName: ['', [Validators.required, Validators.minLength(2)]],
+        lastName: ['', [Validators.required, Validators.minLength(2)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordMatchValidator },
+    );
   }
 
   private passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
@@ -132,7 +134,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   public get passwordMismatchError(): boolean {
-    return this.signupForm.hasError('passwordMismatch') &&
-           this.confirmPasswordControl?.touched === true;
+    return (
+      this.signupForm.hasError('passwordMismatch') && this.confirmPasswordControl?.touched === true
+    );
   }
 }

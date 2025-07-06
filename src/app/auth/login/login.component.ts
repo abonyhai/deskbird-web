@@ -1,23 +1,25 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
+import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { LoginRequest } from '../models/login-request.model';
-import { TranslocoModule } from '@ngneat/transloco';
-import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 import * as AuthActions from '../../store/auth/auth.actions';
 import * as AuthSelectors from '../../store/auth/auth.selectors';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { LoginRequest } from '../models/login-request.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     RouterModule,
     ButtonModule,
@@ -43,7 +45,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly store: Store,
-    private readonly router: Router,
     private readonly messageService: MessageService,
   ) {
     this.isLoading$ = this.store.select(AuthSelectors.selectAuthLoading);
