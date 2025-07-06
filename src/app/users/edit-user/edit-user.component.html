@@ -1,3 +1,4 @@
+<ng-container *transloco="let t">
 <form *ngIf="form" [formGroup]="form" class="p-fluid edit-form" (ngSubmit)="onSave()">
   <div class="field edit-user-field">
     <p-floatlabel variant="on">
@@ -8,7 +9,7 @@
         formControlName="email"
         autocomplete="off"
       />
-      <label for="email">Email</label>
+      <label for="email">{{ t('USERS.EDIT.EMAIL_LABEL') }}</label>
     </p-floatlabel>
   </div>
   <div class="field edit-user-field">
@@ -20,7 +21,7 @@
         formControlName="fullName"
         autocomplete="off"
       />
-      <label for="fullName">Full Name</label>
+      <label for="fullName">{{ t('USERS.EDIT.FULL_NAME_LABEL') }}</label>
     </p-floatlabel>
   </div>
   <div class="field edit-user-field">
@@ -30,14 +31,15 @@
         [options]="roleOptions"
         optionLabel="label"
         optionValue="value"
-        placeholder="Select a role"
+        [placeholder]="t('USERS.EDIT.ROLE_PLACEHOLDER')"
         class="w-full md:w-56"
       />
-      <label for="role">Role</label>
+      <label for="role">{{ t('USERS.EDIT.ROLE_LABEL') }}</label>
     </p-floatlabel>
   </div>
   <div class="flex gap-2 flex-row-reverse">
-    <p-button label="Save" [raised]="true" severity="success" type="submit"/>
-    <p-button label="Discard" variant="text" severity="secondary" type="submit"/>
+    <p-button [label]="t('USERS.EDIT.SAVE_BUTTON')" [raised]="true" severity="success" type="submit"/>
+    <p-button [label]="t('USERS.EDIT.DISCARD_BUTTON')" variant="text" severity="secondary" type="submit"/>
   </div>
 </form>
+</ng-container>

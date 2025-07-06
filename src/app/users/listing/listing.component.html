@@ -15,9 +15,9 @@
       <p-table [value]="users" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
-            <th pSortableColumn="fullName">Name <p-sortIcon field="fullName"></p-sortIcon></th>
-            <th pSortableColumn="role">Role <p-sortIcon field="role"></p-sortIcon></th>
+            <th pSortableColumn="email">{{ t('USERS.LISTING.TABLE.EMAIL_HEADER') }} <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="fullName">{{ t('USERS.LISTING.TABLE.NAME_HEADER') }} <p-sortIcon field="fullName"></p-sortIcon></th>
+            <th pSortableColumn="role">{{ t('USERS.LISTING.TABLE.ROLE_HEADER') }} <p-sortIcon field="role"></p-sortIcon></th>
             <th></th>
           </tr>
         </ng-template>
@@ -27,11 +27,11 @@
             <td>{{ user.fullName }}</td>
             <td>
               @if (user.role === userRoles.Admin) {
-                <p-tag severity="warn" value="ADMIN" />
+                <p-tag severity="warn" [value]="t('USERS.LISTING.ROLE.ADMIN')" />
               } @else if (user.role === userRoles.User) {
-                <p-tag severity="success" value="USER" />
+                <p-tag severity="success" [value]="t('USERS.LISTING.ROLE.USER')" />
               } @else {
-                <p-tag severity="danger" value="Oops, not defined" />
+                <p-tag severity="danger" [value]="t('USERS.LISTING.ROLE.UNDEFINED')" />
               }
             </td>
             <td>
@@ -53,7 +53,7 @@
   }
 
   <p-dialog
-    header="Edit User"
+    [header]="t('USERS.LISTING.EDIT_DIALOG_HEADER')"
     [(visible)]="displayEditDialog"
     [modal]="true"
     [closable]="true"

@@ -44,7 +44,9 @@
 </ng-container>
 
 <p-popover #aboutPopover>
-  <div class="p-3">
-    <p class="m-0">I was vibecoded. LOL 😆</p>
-  </div>
+  <ng-container *transloco="let t">
+    <div class="p-3">
+      <p class="m-0">{{ t('LAYOUT.ABOUT_POPOVER') }}</p>
+    </div>
+  </ng-container>
 </p-popover>

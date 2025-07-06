@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
 import { updateUser } from '../../users/actions/users.actions';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,8 @@ import { updateUser } from '../../users/actions/users.actions';
     SelectModule,
     FloatLabelModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    TranslocoModule
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss',

@@ -10,7 +10,7 @@
             formControlName="email"
             autocomplete="off"
           />
-          <label for="email">Email</label>
+          <label for="email">{{ t('AUTH.SIGNUP.EMAIL_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="field signup-field">
@@ -22,7 +22,7 @@
             formControlName="firstName"
             autocomplete="off"
           />
-          <label for="firstName">First Name</label>
+          <label for="firstName">{{ t('AUTH.SIGNUP.FIRST_NAME_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="field signup-field">
@@ -34,7 +34,7 @@
             formControlName="lastName"
             autocomplete="off"
           />
-          <label for="lastName">Last Name</label>
+          <label for="lastName">{{ t('AUTH.SIGNUP.LAST_NAME_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="field signup-field">
@@ -46,14 +46,14 @@
             formControlName="password"
             autocomplete="off"
           />
-          <label for="password">Password</label>
+          <label for="password">{{ t('AUTH.SIGNUP.PASSWORD_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="mb-3">
-        <p-button label="Sign Up" [raised]="true" severity="success" type="submit" class="w-full" />
+        <p-button [label]="t('AUTH.SIGNUP.CREATE_ACCOUNT_BUTTON')" [raised]="true" severity="success" type="submit" class="w-full" />
       </div>
       <div class="flex flex-column align-items-center gap-2">
-        <a routerLink="/login" class="text-primary">Already have an account? Login</a>
+        <a routerLink="/login" class="text-primary">{{ t('AUTH.SIGNUP.ALREADY_HAVE_ACCOUNT') }} {{ t('AUTH.SIGNUP.SIGN_IN_LINK') }}</a>
       </div>
     </form>
     <p-toast></p-toast>

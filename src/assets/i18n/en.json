@@ -1,16 +1,9 @@
 {
   "AUTH": {
     "LOGIN": {
-      "LOGO_ALT": "Deskbird Logo",
       "WELCOME_TITLE": "WAZAAAAAAP",
       "EMAIL_LABEL": "Email",
-      "EMAIL_PLACEHOLDER": "Email address",
-      "EMAIL_REQUIRED": "Email is required.",
-      "EMAIL_INVALID": "Please enter a valid email.",
       "PASSWORD_LABEL": "Password",
-      "PASSWORD_PLACEHOLDER": "Password",
-      "PASSWORD_REQUIRED": "Password is required.",
-      "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
       "FORGOT_PASSWORD": "Forgot password?",
       "SIGN_IN_BUTTON": "Sign In",
       "NO_ACCOUNT_TEXT": "Don't have an account?",
@@ -19,25 +12,9 @@
     "SIGNUP": {
       "TITLE": "Create your account",
       "FIRST_NAME_LABEL": "First Name",
-      "FIRST_NAME_PLACEHOLDER": "Enter your first name",
-      "FIRST_NAME_REQUIRED": "First name is required.",
-      "FIRST_NAME_MIN_LENGTH": "First name must be at least 2 characters.",
       "LAST_NAME_LABEL": "Last Name",
-      "LAST_NAME_PLACEHOLDER": "Enter your last name",
-      "LAST_NAME_REQUIRED": "Last name is required.",
-      "LAST_NAME_MIN_LENGTH": "Last name must be at least 2 characters.",
       "EMAIL_LABEL": "Email",
-      "EMAIL_PLACEHOLDER": "Enter your email",
-      "EMAIL_REQUIRED": "Email is required.",
-      "EMAIL_INVALID": "Please enter a valid email address.",
       "PASSWORD_LABEL": "Password",
-      "PASSWORD_PLACEHOLDER": "Enter your password",
-      "PASSWORD_REQUIRED": "Password is required.",
-      "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
-      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
-      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your password",
-      "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password.",
-      "PASSWORDS_DO_NOT_MATCH": "Passwords do not match.",
       "CREATE_ACCOUNT_BUTTON": "Create Account",
       "ALREADY_HAVE_ACCOUNT": "Already have an account?",
       "SIGN_IN_LINK": "Sign In"
@@ -45,14 +22,42 @@
     "FORGOT": {
       "TITLE": "Forgot Password",
       "EMAIL_LABEL": "Email",
-      "EMAIL_PLACEHOLDER": "Enter your email",
-      "EMAIL_REQUIRED": "Email is required.",
-      "EMAIL_INVALID": "Please enter a valid email address.",
       "SEND_RESET_LINK": "Send Reset Link",
       "CHECK_EMAIL_TITLE": "Check Your Email",
       "CHECK_EMAIL_MESSAGE": "We've sent a password reset link to your email address.",
       "BACK_TO_LOGIN": "Back to Login"
     },
     "LOGOUT": "Logout"
+  },
+  "USERS": {
+    "LISTING": {
+      "HEADER": "User Listing",
+      "DESCRIPTION": "This is where you can manage and view all users in the system.",
+      "TABLE": {
+        "EMAIL_HEADER": "Email",
+        "NAME_HEADER": "Name",
+        "ROLE_HEADER": "Role"
+      },
+      "ROLE": {
+        "ADMIN": "Admin",
+        "USER": "User",
+        "UNDEFINED": "Not defined"
+      },
+      "EDIT_DIALOG_HEADER": "Edit User"
+    },
+    "EDIT": {
+      "EMAIL_LABEL": "Email",
+      "FULL_NAME_LABEL": "Full Name",
+      "ROLE_LABEL": "Role",
+      "ROLE_PLACEHOLDER": "Select a role",
+      "SAVE_BUTTON": "Save",
+      "DISCARD_BUTTON": "Discard"
+    }
+  },
+  "LAYOUT": {
+    "ABOUT_POPOVER": "I was vibecoded. LOL 😆",
+    "MENU": {
+      "USERS": "Users"
+    }
   }
 }

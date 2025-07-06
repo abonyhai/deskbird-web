@@ -10,7 +10,7 @@
             formControlName="email"
             autocomplete="off"
           />
-          <label for="email">Email</label>
+          <label for="email">{{ t('AUTH.LOGIN.EMAIL_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="field login-field">
@@ -22,17 +22,17 @@
             formControlName="password"
             autocomplete="off"
           />
-          <label for="password">Password</label>
+          <label for="password">{{ t('AUTH.LOGIN.PASSWORD_LABEL') }}</label>
         </p-floatlabel>
       </div>
       <div class="mb-2 text-left">
-        <a routerLink="/forgot-password" class="text-primary">Forgot password?</a>
+        <a routerLink="/forgot-password" class="text-primary">{{ t('AUTH.LOGIN.FORGOT_PASSWORD') }}</a>
       </div>
       <div class="mb-3">
-        <p-button label="Login" [raised]="true" severity="success" type="submit" class="w-full" />
+        <p-button [label]="t('AUTH.LOGIN.SIGN_IN_BUTTON')" [raised]="true" severity="success" type="submit" class="w-full" />
       </div>
       <div class="flex flex-column align-items-center gap-2">
-        <a routerLink="/signup" class="text-primary">Don't have an account? Sign up</a>
+        <a routerLink="/signup" class="text-primary">{{ t('AUTH.LOGIN.NO_ACCOUNT_TEXT') }} {{ t('AUTH.LOGIN.SIGN_UP_LINK') }}</a>
       </div>
     </form>
     <p-toast></p-toast>

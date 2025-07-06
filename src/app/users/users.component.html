@@ -1,7 +1,7 @@
 <ng-container *transloco="let t">
-  <p-card header="User Listing">
+  <p-card [header]="t('USERS.LISTING.HEADER')">
     <div class="mt-4">
-      <p>This is where you can manage and view all users in the system.</p>
+      <p>{{ t('USERS.LISTING.DESCRIPTION') }}</p>
     </div>
     <div class="content">
       <router-outlet></router-outlet>

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { PopoverModule } from 'primeng/popover';
 import { RouterOutlet, Router, RouterModule } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 import { UserProfileBadgeComponent } from '../user-profile-badge/user-profile-badge.component';
 
@@ -24,11 +24,11 @@ export class LayoutComponent {
   public readonly title: string = 'deskbird-web';
   public fullName: string = 'John Doe'; // Replace with actual user full name from your auth logic
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router, private readonly translocoService: TranslocoService) {}
 
   public get menubarItems(): MenuItem[] {
     return [
-      { label: 'Users', icon: 'pi pi-users', route: '/users' },
+      { label: this.translocoService.translate('LAYOUT.MENU.USERS'), icon: 'pi pi-users', route: '/users' },
     ];
   }
 
