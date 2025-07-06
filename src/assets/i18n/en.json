@@ -52,6 +52,7 @@
       "CHECK_EMAIL_TITLE": "Check Your Email",
       "CHECK_EMAIL_MESSAGE": "We've sent a password reset link to your email address.",
       "BACK_TO_LOGIN": "Back to Login"
-    }
+    },
+    "LOGOUT": "Logout"
   }
 }

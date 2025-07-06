@@ -70,3 +70,9 @@ body {
   gap: 8px;
   align-items: center;
 }
+
+.profile-popover {
+  .p-popover-content {
+  min-width: 200px;
+  }
+}

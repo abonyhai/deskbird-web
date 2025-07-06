@@ -1,7 +1,13 @@
 <ng-container *transloco="let t">
   <p-menubar [model]="menubarItems">
     <ng-template pTemplate="start">
-      <span class="font-bold text-xl">{{ t('DEMO') }}</span>
+      <img src="assets/images/deskbird-full-purple.png" alt="logo" class="navbar-logo" />
+    </ng-template>
+    <ng-template pTemplate="end">
+      <app-user-profile-badge
+        class="flex justify-content-center align-items-center"
+        [fullName]="fullName"
+      ></app-user-profile-badge>
     </ng-template>
   </p-menubar>
 
