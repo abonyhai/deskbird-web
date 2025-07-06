@@ -22,6 +22,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { updateUserSuccess } from '../actions/users.actions';
 import { SubscriptionCleanup } from '../../shared/utils/subscription-cleanup';
 import { takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export type UserWithRole = User & { role?: string };
 
@@ -40,7 +41,7 @@ export type UserWithRole = User & { role?: string };
     DialogModule,
     EditUserComponent,
     ProgressSpinnerModule,
-    TranslocoModule
+    TranslocoModule,
   ],
   templateUrl: './listing.component.html',
   styleUrl: './listing.component.scss',
@@ -56,17 +57,21 @@ export class ListingComponent extends SubscriptionCleanup implements OnInit {
   public loading$!: Observable<boolean>;
   public error$!: Observable<string | null>;
 
-  public constructor(private readonly store: Store, private readonly authService: AuthService, private readonly actions$: Actions, private readonly changeDetectorRef: ChangeDetectorRef) {
+  public constructor(
+    private readonly store: Store,
+    private readonly authService: AuthService,
+    private readonly actions$: Actions,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {
     super();
     this.currentUser$ = this.authService.currentUser$;
-    this.users$ = this.store.select(UsersSelectors.selectUsers);
+    this.users$ = this.store.select(UsersSelectors.selectUsers).pipe(
+      map(users => users.slice())
+    );
     this.loading$ = this.store.select(UsersSelectors.selectUsersLoading);
     this.error$ = this.store.select(UsersSelectors.selectUsersError);
 
-    this.actions$.pipe(
-      ofType(updateUserSuccess),
-      takeUntil(this.destroy$)
-    ).subscribe(() => {
+    this.actions$.pipe(ofType(updateUserSuccess), takeUntil(this.destroy$)).subscribe(() => {
       this.displayEditDialog = false;
       this.selectedUser = null;
       this.changeDetectorRef.detectChanges();
@@ -75,9 +80,6 @@ export class ListingComponent extends SubscriptionCleanup implements OnInit {
 
   public ngOnInit(): void {
     this.store.dispatch(UsersActions.loadUsers());
-    this.users$.subscribe((users) => {
-      console.log(users)
-    })
   }
 
   public onEditUser(user: UserWithRole): void {
