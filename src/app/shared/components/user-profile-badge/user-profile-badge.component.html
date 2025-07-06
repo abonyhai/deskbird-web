@@ -12,7 +12,7 @@
   <p-popover #op [styleClass]="'profile-popover'">
     <div class="flex flex-col gap-4">
       <div class="w-full">
-        <span class="font-medium block mb-2">{{ fullName }}</span>
+        <span class="font-medium block mb-2">{{ fullName$ | async }}</span>
         <p-divider />
         <p-button
           icon="pi pi-sign-out"

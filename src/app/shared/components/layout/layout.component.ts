@@ -22,7 +22,6 @@ interface MenuItem {
 })
 export class LayoutComponent {
   public readonly title: string = 'deskbird-web';
-  public fullName: string = 'John Doe'; // Replace with actual user full name from your auth logic
 
   constructor(private readonly router: Router, private readonly translocoService: TranslocoService) {}
 
