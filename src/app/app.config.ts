@@ -4,18 +4,24 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { provideTransloco } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from './transloco.loader';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpRequestInterceptor } from './shared/interceptors/http.interceptor';
+import { usersReducer } from './users/reducers/users.reducer';
+import { UsersEffects } from './users/effects/users.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
+    provideStore({ users: usersReducer }),
+    provideEffects([UsersEffects]),
     provideHttpClient(withInterceptors([HttpRequestInterceptor])),
     providePrimeNG({
       theme: {
