@@ -34,6 +34,10 @@ export const routes: Routes = [
       {
         path: 'users',
         loadComponent: () => import('./users/users.component').then((m) => m.UsersComponent),
+        children: [
+          { path: '', redirectTo: 'listing', pathMatch: 'full' },
+          { path: 'listing', loadComponent: () => import('./users/listing/listing.component').then(m => m.ListingComponent) },
+        ],
       },
       // Add more child routes here for other application features
     ],
