@@ -1,25 +1,22 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
-import { Store } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import * as AuthActions from '../../store/auth/auth.actions';
-import * as AuthSelectors from '../../store/auth/auth.selectors';
-import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { AuthService } from '../services/auth.service';
 import { LoginRequest } from '../models/login-request.model';
-import { CommonModule } from '@angular/common';
+import { ApiResponse } from '../../shared/models/common.models';
+import { AuthResponse } from '../models/auth.models';
+import { TranslocoModule } from '@ngneat/transloco';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     RouterModule,
     ButtonModule,
@@ -35,30 +32,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   // Traditional form and state
   public loginForm!: FormGroup;
-  public isLoading$: Observable<boolean>;
-  public error$: Observable<string | null>;
-  private readonly destroy$ = new Subject<void>();
+  public isLoading = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly store: Store,
+    private readonly authService: AuthService,
+    private readonly router: Router,
     private readonly messageService: MessageService,
-  ) {
-    this.isLoading$ = this.store.select(AuthSelectors.selectAuthLoading);
-    this.error$ = this.store.select(AuthSelectors.selectAuthError);
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.initForm();
-    this.setupErrorHandling();
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public onSubmit(): void {
@@ -67,19 +54,38 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.isLoading = true;
     const loginData: LoginRequest = this.loginForm.value;
-    this.store.dispatch(AuthActions.login({ credentials: loginData }));
+
+    this.authService.login(loginData).subscribe({
+      next: (response: ApiResponse<AuthResponse>): void => {
+        this.isLoading = false;
+        if (response.success && response.data) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Login successful!',
+          });
+          this.router.navigate(['/']);
+        } else {
+          this.handleLoginError(response.message || 'Login failed');
+        }
+      },
+      error: (error: unknown): void => {
+        this.isLoading = false;
+        this.handleLoginError('An error occurred during login. Please try again.', error);
+      },
+    });
   }
 
-  private setupErrorHandling(): void {
-    this.error$.pipe(takeUntil(this.destroy$)).subscribe((error: string | null) => {
-      if (error) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error,
-        });
-      }
+  private handleLoginError(message: string, error?: unknown): void {
+    if (error) {
+      console.error('Login error:', error);
+    }
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: message,
     });
   }
 

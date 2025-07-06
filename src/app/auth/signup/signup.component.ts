@@ -1,20 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
-import { Store } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import * as AuthActions from '../../store/auth/auth.actions';
-import * as AuthSelectors from '../../store/auth/auth.selectors';
-import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { TranslocoModule } from '@ngneat/transloco';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 import { RegisterRequest } from '../models/register-request.model';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-signup',
@@ -36,63 +33,68 @@ import { RegisterRequest } from '../models/register-request.model';
   styleUrl: './signup.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit {
   public signupForm!: FormGroup;
-  public isLoading$: Observable<boolean>;
-  public error$: Observable<string | null>;
-  private readonly destroy$ = new Subject<void>();
+  public isLoading = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly store: Store,
+    private readonly authService: AuthService,
+    private readonly router: Router,
     private readonly messageService: MessageService,
-  ) {
-    this.isLoading$ = this.store.select(AuthSelectors.selectAuthLoading);
-    this.error$ = this.store.select(AuthSelectors.selectAuthError);
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.initForm();
-    this.setupErrorHandling();
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public onSubmit(): void {
     if (this.signupForm.valid) {
+      this.isLoading = true;
       const signupData: RegisterRequest = this.signupForm.value;
-      this.store.dispatch(AuthActions.register({ userData: signupData }));
+
+      this.authService.register(signupData).subscribe({
+        next: (response): void => {
+          this.isLoading = false;
+          if (response.success) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Registration successful! Welcome to Deskbird.',
+            });
+            // Navigate to home page after successful registration
+            this.router.navigate(['/']);
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: response.message || 'Registration failed',
+            });
+          }
+        },
+        error: (error: unknown): void => {
+          this.isLoading = false;
+          console.error('Registration error:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An error occurred during registration. Please try again.',
+          });
+        },
+      });
     } else {
       this.markFormGroupTouched();
     }
   }
 
-  private setupErrorHandling(): void {
-    this.error$.pipe(takeUntil(this.destroy$)).subscribe((error: string | null) => {
-      if (error) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error,
-        });
-      }
-    });
-  }
-
   private initForm(): void {
-    this.signupForm = this.formBuilder.group(
-      {
-        firstName: ['', [Validators.required, Validators.minLength(2)]],
-        lastName: ['', [Validators.required, Validators.minLength(2)]],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]],
-      },
-      { validators: this.passwordMatchValidator },
-    );
+    this.signupForm = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]],
+    }, { validators: this.passwordMatchValidator });
   }
 
   private passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
@@ -134,8 +136,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   public get passwordMismatchError(): boolean {
-    return (
-      this.signupForm.hasError('passwordMismatch') && this.confirmPasswordControl?.touched === true
-    );
+    return this.signupForm.hasError('passwordMismatch') &&
+           this.confirmPasswordControl?.touched === true;
   }
 }

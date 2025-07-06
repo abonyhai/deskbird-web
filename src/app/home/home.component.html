@@ -1,5 +1,13 @@
 <ng-container *transloco="let t">
   <p-card header="Welcome to Deskbird">
+    <div class="mb-4">
+      <strong>API Status:</strong>
+      <span [class]="apiStatus === 'Connected' ? 'text-green-600' : 'text-red-600'">
+        {{ apiStatus }}
+      </span>
+      <br>
+      <small class="text-gray-600">API URL: {{ environment.apiBaseUrl }}</small>
+    </div>
 
     <div class="mt-4">
       <h3>Application Features</h3>
