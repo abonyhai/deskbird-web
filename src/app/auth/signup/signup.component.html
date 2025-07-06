@@ -49,6 +49,24 @@
           <label for="password">{{ t('AUTH.SIGNUP.PASSWORD_LABEL') }}</label>
         </p-floatlabel>
       </div>
+      <div class="field signup-field">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            autocomplete="off"
+          />
+          <label for="confirmPassword">{{ t('AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL') }}</label>
+        </p-floatlabel>
+        <div *ngIf="confirmPasswordControl?.touched && confirmPasswordControl?.invalid" class="p-error">
+          {{ t('AUTH.SIGNUP.CONFIRM_PASSWORD_REQUIRED') }}
+        </div>
+        <div *ngIf="passwordMismatchError" class="p-error">
+          {{ t('AUTH.SIGNUP.PASSWORD_MISMATCH') }}
+        </div>
+      </div>
       <div class="mb-3">
         <p-button [label]="t('AUTH.SIGNUP.CREATE_ACCOUNT_BUTTON')" [raised]="true" severity="success" type="submit" class="w-full" />
       </div>

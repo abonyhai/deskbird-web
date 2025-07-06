@@ -46,22 +46,28 @@ export class SignupComponent implements OnInit {
     private readonly messageService: MessageService,
   ) {
     this.signupForm = this.formBuilder.group({
-      email: [''],
-      firstName: [''],
-      lastName: [''],
-      password: [''],
-    });
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]],
+    }, { validators: this.passwordMatchValidator });
   }
 
   public ngOnInit(): void {
-    this.initForm();
+    // Removed initForm call
   }
 
   public onSubmit(): void {
+    console.log('onSubmit', this.signupForm.value);
     if (this.signupForm.valid) {
       this.isLoading = true;
-      const signupData: RegisterRequest = this.signupForm.value;
-
+      const { firstName, lastName, email, password } = this.signupForm.value;
+      const signupData: RegisterRequest = {
+        email,
+        password,
+        fullName: `${firstName} ${lastName}`.trim(),
+      };
       this.authService.register(signupData).subscribe({
         next: (response): void => {
           this.isLoading = false;
@@ -93,16 +99,6 @@ export class SignupComponent implements OnInit {
     } else {
       this.markFormGroupTouched();
     }
-  }
-
-  private initForm(): void {
-    this.signupForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-    }, { validators: this.passwordMatchValidator });
   }
 
   private markFormGroupTouched(): void {

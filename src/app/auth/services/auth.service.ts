@@ -39,7 +39,7 @@ export class AuthService {
 
   public register(userData: RegisterRequest): Observable<ApiResponse<AuthResponse>> {
     this.isLoadingSubject.next(true);
-    return this.apiService.post<AuthResponse>('/auth/register', userData).pipe(
+    return this.apiService.post<AuthResponse>('/auth/signup', userData).pipe(
       tap((response: ApiResponse<AuthResponse>): void => {
         this.isLoadingSubject.next(false);
         if (response.success && response.data) {

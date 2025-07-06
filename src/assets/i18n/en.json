@@ -15,6 +15,9 @@
       "LAST_NAME_LABEL": "Last Name",
       "EMAIL_LABEL": "Email",
       "PASSWORD_LABEL": "Password",
+      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+      "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password.",
+      "PASSWORD_MISMATCH": "Passwords do not match.",
       "CREATE_ACCOUNT_BUTTON": "Create Account",
       "ALREADY_HAVE_ACCOUNT": "Already have an account?",
       "SIGN_IN_LINK": "Sign In"
