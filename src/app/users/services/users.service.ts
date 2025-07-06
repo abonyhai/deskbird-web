@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { AuthService } from '../auth/services/auth.service';
-import { environment } from '../environments/environment';
-import { UpdateUserDto, User } from '../shared/models/user.models';
+import { AuthService } from '../../auth/services/auth.service';
+import { environment } from '../../environments/environment';
+import { User, UpdateUserDto } from '../../shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
