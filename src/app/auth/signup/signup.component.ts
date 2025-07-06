@@ -81,9 +81,8 @@ export class SignupComponent implements OnInit {
             });
           }
         },
-        error: (error: unknown): void => {
+        error: (): void => {
           this.isLoading = false;
-          console.error('Registration error:', error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',

@@ -39,35 +39,7 @@ export class ApiService {
     return this.http.patch<ApiResponse<T>>(url, body).pipe(catchError(this.handleError));
   }
 
-  private readonly handleError = (error: unknown): Observable<never> => {
-    let errorMessage: string = 'An error occurred';
-
-    // Check if we're in a browser environment
-    if (typeof window !== 'undefined') {
-      if (error instanceof ErrorEvent) {
-        // Client-side error
-        errorMessage = error.message;
-      } else if (error && typeof error === 'object' && 'status' in error) {
-        // Server-side error
-        const httpError = error as { status?: number; message?: string };
-        errorMessage = httpError.status
-          ? `Error Code: ${httpError.status}\nMessage: ${httpError.message ?? 'Unknown error'}`
-          : 'Server error';
-      }
-    } else {
-      // Server-side rendering - handle differently
-      if (error && typeof error === 'object' && 'status' in error) {
-        const httpError = error as { status?: number; message?: string };
-        errorMessage = httpError.status
-          ? `Error Code: ${httpError.status}\nMessage: ${httpError.message ?? 'Unknown error'}`
-          : 'Server error';
-      }
-    }
-
-    if (environment.enableDebug) {
-      console.error('API Error:', error);
-    }
-
-    return throwError(() => new Error(errorMessage));
-  };
+  private handleError(error: any): Observable<never> {
+    return throwError(() => error);
+  }
 }

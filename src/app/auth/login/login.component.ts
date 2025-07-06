@@ -73,20 +73,17 @@ export class LoginComponent implements OnInit {
           this.handleLoginError(response.message || 'Login failed');
         }
       },
-      error: (error: unknown): void => {
+      error: (): void => {
         this.isLoading = false;
-        this.handleLoginError('An error occurred during login. Please try again.', error);
+        this.handleLoginError('An error occurred during login. Please try again.');
       },
     });
   }
 
-  private handleLoginError(message: string, error?: unknown): void {
-    if (error) {
-      console.error('Login error:', error);
-    }
+  private handleLoginError(message: string): void {
     this.messageService.add({
       severity: 'error',
-      summary: 'Error',
+      summary: 'Login Failed',
       detail: message,
     });
   }

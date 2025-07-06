@@ -117,7 +117,6 @@ export class AuthService {
           const user: User = JSON.parse(userStr);
           this.currentUserSubject.next(user);
         } catch (error: unknown) {
-          console.error('Error parsing user from storage:', error);
           this.logout();
         }
       }
