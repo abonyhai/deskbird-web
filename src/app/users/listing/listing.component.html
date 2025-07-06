@@ -1,96 +1,40 @@
-<p-table [value]="products" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">
+<p-table [value]="users" dataKey="id" [tableStyle]="{'min-width': '40rem'}">
   <ng-template #header>
-      <tr>
-          <th style="width:20%">Code</th>
-          <th style="width:20%">Name</th>
-          <th style="width:20%">Inventory Status</th>
-          <th style="width:20%">Price</th>
-          <th style="width:20%"></th>
-      </tr>
+    <tr>
+      <th style="width:25%">Email</th>
+      <th style="width:25%">Name</th>
+      <th style="width:15%">Role</th>
+      <th style="width:25%">Updated At</th>
+      <th style="width:10%"></th>
+    </tr>
   </ng-template>
-  @for (product of products; track product.id; let ri = $index) {
-    <tr [pEditableRow]="product">
+  <ng-template #body let-user>
+    <tr>
+      <td>{{ user.email }}</td>
+      <td>{{ user.firstName }} {{ user.lastName }}</td>
       <td>
-        <p-cellEditor>
-          <ng-template #input>
-            <input pInputText type="text" [(ngModel)]="product.code" />
-          </ng-template>
-          <ng-template #output>
-            {{product.code}}
-          </ng-template>
-        </p-cellEditor>
+        @if (user.role === userRoles.Admin) {
+          <p-tag severity="warn" value="ADMIN" />
+        }
+        @else if (user.role === userRoles.User) {
+          <p-tag severity="success" value="USER" />
+        }
+        @else {
+          <p-tag severity="danger" value="Oops, not defined" />
+        }
       </td>
+      <td>{{ user.updatedAt | date: 'short' }}</td>
       <td>
-        <p-cellEditor>
-          <ng-template #input>
-            <input pInputText type="text" [(ngModel)]="product.name" required />
-          </ng-template>
-          <ng-template #output>
-            {{product.name}}
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td>
-        <p-cellEditor>
-          <ng-template #input>
-            <p-select [options]="statuses" appendTo="body" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}" />
-          </ng-template>
-          <ng-template #output>
-            <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td>
-        <p-cellEditor>
-          <ng-template #input>
-            <input pInputText type="text" [(ngModel)]="product.price" />
-          </ng-template>
-          <ng-template #output>
-            {{product.price | currency: 'USD'}}
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td>
-        <div class="flex items-center justify-center gap-2">
-          @if (!product.editing) {
-            <button
-              pButton
-              pRipple
-              type="button"
-              pInitEditableRow
-              icon="pi pi-pencil"
-              (click)="onRowEditInit(product)"
-              text
-              rounded
-              severity="secondary"
-            ></button>
-          }
-          @if (product.editing) {
-            <button
-              pButton
-              pRipple
-              type="button"
-              pSaveEditableRow
-              icon="pi pi-check"
-              (click)="onRowEditSave(product)"
-              text
-              rounded
-              severity="secondary"
-            ></button>
-            <button
-              pButton
-              pRipple
-              type="button"
-              pCancelEditableRow
-              icon="pi pi-times"
-              (click)="onRowEditCancel(product, ri)"
-              text
-              rounded
-              severity="secondary"
-            ></button>
-          }
-        </div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-pencil"
+          (click)="onEditUser(user)"
+          text
+          severity="secondary"
+        ></button>
       </td>
     </tr>
-  }
+  </ng-template>
 </p-table>

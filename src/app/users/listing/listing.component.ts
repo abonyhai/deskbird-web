@@ -6,25 +6,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TagModule } from 'primeng/tag';
 import { SelectModule } from 'primeng/select';
+import { User } from '../../shared/models/user.models';
+import { CommonModule } from '@angular/common';
+import { UserRoles } from '../../shared/enums/user.enum';
 
-export interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
-  editing?: boolean;
-}
+export type UserWithRole = User & { role?: string };
 
 @Component({
   selector: 'app-listing',
   standalone: true,
   imports: [
+    CommonModule,
     TableModule,
     ButtonModule,
     RippleModule,
@@ -38,46 +30,32 @@ export interface Product {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListingComponent {
-  products!: Product[];
+  public userRoles = UserRoles;
+  users: UserWithRole[] = [
+    {
+      id: '1',
+      email: 'john.doe@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      avatar: '',
+      createdAt: '2024-01-01T12:00:00Z',
+      updatedAt: '2024-01-02T12:00:00Z',
+      role: 'admin',
+    },
+    {
+      id: '2',
+      email: 'jane.smith@example.com',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      avatar: '',
+      createdAt: '2024-01-03T12:00:00Z',
+      updatedAt: '2024-01-04T12:00:00Z',
+      role: 'user',
+    },
+  ];
 
-  statuses!: { label: string; value: string }[];
-
-  clonedProducts: { [s: string]: Product } = {};
-
-  constructor() {}
-
-  ngOnInit() {
-    this.products = [];
-
-    this.statuses = [
-      { label: 'In Stock', value: 'INSTOCK' },
-      { label: 'Low Stock', value: 'LOWSTOCK' },
-      { label: 'Out of Stock', value: 'OUTOFSTOCK' },
-    ];
-  }
-
-  onRowEditInit(product: Product) {
-    this.clonedProducts[product.id as string] = { ...product };
-    product.editing = true;
-  }
-
-  onRowEditSave(product: Product) {
-    product.editing = false;
-  }
-
-  onRowEditCancel(product: Product) {
-    product.editing = false;
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warn';
-      case 'OUTOFSTOCK':
-        return 'danger';
-    }
-    return '';
+  onEditUser(user: UserWithRole): void {
+    // Placeholder for future popup logic
+    console.log('Edit user:', user);
   }
 }
