@@ -90,3 +90,27 @@ body {
     width: 100%;
   }
 }
+
+button[aria-label="Close"], .close, .dialog-close, .p-dialog-header-close {
+  min-width: 2rem;
+  min-height: 2rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-user-dialog{
+
+}
+
+.p-dialog-close-button {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
