@@ -1,0 +1,58 @@
+<form *ngIf="form" [formGroup]="form" class="p-fluid edit-form">
+  <div class="field edit-user-field">
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email"
+        autocomplete="off"
+      />
+      <label for="email">Email</label>
+    </p-floatlabel>
+  </div>
+  <div class="field edit-user-field">
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="firstName"
+        type="text"
+        pInputText
+        formControlName="firstName"
+        autocomplete="off"
+      />
+      <label for="firstName">First Name</label>
+    </p-floatlabel>
+  </div>
+  <div class="field edit-user-field">
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="lastName"
+        type="text"
+        pInputText
+        formControlName="lastName"
+        autocomplete="off"
+      />
+      <label for="lastName">Last Name</label>
+    </p-floatlabel>
+  </div>
+  <div class="field edit-user-field">
+    <p-floatlabel variant="on">
+      <p-select
+        formControlName="role"
+        [options]="roleOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select a role"
+        class="w-full md:w-56"
+      />
+      <label for="role">Role</label>
+    </p-floatlabel>
+  </div>
+  <div class="flex gap-2 flex-row-reverse">
+    <p-button label="Save" [raised]="true" severity="success" type="submit"/>
+    <p-button label="Discard" variant="text" severity="secondary" type="submit"/>
+  </div>
+</form>

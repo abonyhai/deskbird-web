@@ -1,0 +1,48 @@
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { User } from '../../shared/models/user.models';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UserRoles } from '../../shared/enums/user.enum';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+
+@Component({
+  selector: 'app-edit-user',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    SelectModule,
+    FloatLabelModule,
+    InputTextModule,
+    ButtonModule
+  ],
+  templateUrl: './edit-user.component.html',
+  styleUrl: './edit-user.component.scss',
+})
+export class EditUserComponent implements OnChanges {
+  @Input() user!: User & { role?: string };
+  form!: FormGroup;
+  userRoles = Object.values(UserRoles);
+  roleOptions = [
+    { label: 'Admin', value: UserRoles.Admin },
+    { label: 'User', value: UserRoles.User },
+  ];
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['user'] && this.user) {
+      this.form = this.fb.group({
+        email: [this.user.email],
+        firstName: [this.user.firstName],
+        lastName: [this.user.lastName],
+        role: [this.user.role || UserRoles.User],
+      });
+    }
+  }
+}

@@ -6,10 +6,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TagModule } from 'primeng/tag';
 import { SelectModule } from 'primeng/select';
+import { DialogModule } from 'primeng/dialog';
 import { User } from '../../shared/models/user.models';
 import { CommonModule } from '@angular/common';
 import { UserRoles } from '../../shared/enums/user.enum';
 import { AuthService } from '../../auth/services/auth.service';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 export type UserWithRole = User & { role?: string };
 
@@ -24,7 +26,9 @@ export type UserWithRole = User & { role?: string };
     InputTextModule,
     FormsModule,
     TagModule,
-    SelectModule
+    SelectModule,
+    DialogModule,
+    EditUserComponent
   ],
   templateUrl: './listing.component.html',
   styleUrl: './listing.component.scss',
@@ -33,6 +37,9 @@ export type UserWithRole = User & { role?: string };
 export class ListingComponent {
   public userRoles = UserRoles;
   public currentUser$;
+  public displayEditDialog = false;
+  public selectedUser: UserWithRole | null = null;
+
   users: UserWithRole[] = [
     {
       id: '1',
@@ -60,8 +67,13 @@ export class ListingComponent {
     this.currentUser$ = this.authService.currentUser$;
   }
 
-  public onEditUser(user: UserWithRole): void {
-    // Placeholder for future popup logic
-    console.log('Edit user:', user);
+  onEditUser(user: UserWithRole): void {
+    this.selectedUser = user;
+    this.displayEditDialog = true;
+  }
+
+  onDialogHide(): void {
+    this.displayEditDialog = false;
+    this.selectedUser = null;
   }
 }
