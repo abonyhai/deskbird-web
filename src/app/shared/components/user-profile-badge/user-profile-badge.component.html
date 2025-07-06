@@ -1,6 +1,12 @@
 <ng-container *transloco="let t">
   <div class="user-profile-badge">
-    <p-avatar icon="pi pi-user" shape="circle" (click)="op.toggle($event)"></p-avatar>
+    <p-avatar
+    class="profile-badge-avatar"
+      [styleClass]="''"
+      icon="pi pi-user"
+      shape="circle"
+      (click)="op.toggle($event)"
+    ></p-avatar>
   </div>
 
   <p-popover #op [styleClass]="'profile-popover'">
@@ -8,7 +14,13 @@
       <div class="w-full">
         <span class="font-medium block mb-2">{{ fullName }}</span>
         <p-divider />
-        <p-button icon="pi pi-sign-out" [label]="t('AUTH.LOGOUT')" variant="text" severity="danger"  (click)="onLogout()" />
+        <p-button
+          icon="pi pi-sign-out"
+          [label]="t('AUTH.LOGOUT')"
+          variant="text"
+          severity="danger"
+          (click)="onLogout()"
+        />
       </div>
     </div>
   </p-popover>
