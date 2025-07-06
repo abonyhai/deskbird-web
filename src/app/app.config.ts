@@ -13,8 +13,7 @@ import { TranslocoHttpLoader } from './transloco.loader';
 import { provideHttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpRequestInterceptor } from './shared/interceptors/http.interceptor';
-import { usersReducer } from './users/reducers/users.reducer';
-import { UsersEffects } from './users/effects/users.effects';
+import { UsersEffects, usersReducer } from './store/users';
 
 export const appConfig: ApplicationConfig = {
   providers: [

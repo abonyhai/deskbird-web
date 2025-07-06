@@ -9,7 +9,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
-import { updateUser } from '../../users/actions/users.actions';
+import { updateUser } from '../../store/users/users.actions';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
