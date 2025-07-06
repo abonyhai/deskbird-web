@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { User } from '../../shared/models';
 import { ApiResponse } from '../../shared/models/common.models';
 import { ApiService } from '../../shared/services/api.service';
@@ -11,21 +11,11 @@ import { RegisterRequest } from '../models/register-request.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly currentUserSubject = new BehaviorSubject<User | null>(null);
-  private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
-
-  public readonly currentUser$ = this.currentUserSubject.asObservable();
-  public readonly isLoading$ = this.isLoadingSubject.asObservable();
-
-  constructor(private readonly apiService: ApiService) {
-    this.loadUserFromStorage();
-  }
+  constructor(private readonly apiService: ApiService) {}
 
   public login(credentials: LoginRequest): Observable<ApiResponse<AuthResponse>> {
-    this.isLoadingSubject.next(true);
     return this.apiService.post<AuthResponse>('/auth/login', credentials).pipe(
       tap((response: ApiResponse<AuthResponse>): void => {
-        this.isLoadingSubject.next(false);
         if (response.success && response.data) {
           this.setAuthData(response.data);
         }
@@ -34,10 +24,8 @@ export class AuthService {
   }
 
   public register(userData: RegisterRequest): Observable<ApiResponse<AuthResponse>> {
-    this.isLoadingSubject.next(true);
     return this.apiService.post<AuthResponse>('/auth/register', userData).pipe(
       tap((response: ApiResponse<AuthResponse>): void => {
-        this.isLoadingSubject.next(false);
         if (response.success && response.data) {
           this.setAuthData(response.data);
         }
@@ -51,11 +39,22 @@ export class AuthService {
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
     }
-    this.currentUserSubject.next(null);
   }
 
   public getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const userStr: string | null = localStorage.getItem('user');
+      if (userStr) {
+        try {
+          return JSON.parse(userStr);
+        } catch (error: unknown) {
+          console.error('Error parsing user from storage:', error);
+          this.logout();
+          return null;
+        }
+      }
+    }
+    return null;
   }
 
   public isAuthenticated(): boolean {
@@ -86,6 +85,11 @@ export class AuthService {
     );
   }
 
+  public loadUserFromStorage(): Observable<User | null> {
+    const user = this.getCurrentUser();
+    return of(user);
+  }
+
   private setAuthData(authData: AuthResponse): void {
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       localStorage.setItem('auth_token', authData.token);
@@ -94,7 +98,6 @@ export class AuthService {
       }
       localStorage.setItem('user', JSON.stringify(authData.user));
     }
-    this.currentUserSubject.next(authData.user);
   }
 
   private getRefreshToken(): string | null {
@@ -102,20 +105,5 @@ export class AuthService {
       return localStorage.getItem('refreshToken');
     }
     return null;
-  }
-
-  private loadUserFromStorage(): void {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      const userStr: string | null = localStorage.getItem('user');
-      if (userStr) {
-        try {
-          const user: User = JSON.parse(userStr);
-          this.currentUserSubject.next(user);
-        } catch (error: unknown) {
-          console.error('Error parsing user from storage:', error);
-          this.logout();
-        }
-      }
-    }
   }
 }

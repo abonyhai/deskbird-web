@@ -12,20 +12,23 @@ import { provideTransloco } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from './transloco.loader';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpRequestInterceptor } from './shared/interceptors/http.interceptor';
+import { authReducer } from './store/auth/auth.reducer';
+import { AuthEffects } from './store/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideStore(),
-    provideEffects(),
+    provideStore({
+      auth: authReducer,
+    }),
+    provideEffects([AuthEffects]),
     provideHttpClient(withInterceptors([HttpRequestInterceptor])),
     providePrimeNG({
       theme: {
         preset: Lara,
         options: {
-          // todo check why color not changing
           colorScheme: 'blue',
         },
       },
@@ -34,7 +37,6 @@ export const appConfig: ApplicationConfig = {
       config: {
         availableLangs: ['en'],
         defaultLang: 'en',
-        // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
       },
       loader: TranslocoHttpLoader,
