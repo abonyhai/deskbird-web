@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, throwError, tap, catchError } from 'rxjs';
-import { ApiResponse } from '../shared/models/common.models';
-import { User } from '../shared/models/user.models';
+import { User, UpdateUserDto } from '../shared/models/user.models';
 import { AuthService } from '../auth/services/auth.service';
 import { environment } from '../environments/environment';
 
@@ -53,7 +52,7 @@ export class UsersService {
     );
   }
 
-  public updateUser(user: User): Observable<User> {
+  public updateUser(id: number, dto: UpdateUserDto): Observable<User> {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -65,11 +64,7 @@ export class UsersService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.patch<ApiResponse<User>>(`${this.baseUrl}/${user.id}`, user, { headers }).pipe(
-      map((res) => {
-        if (!res.data) throw new Error('No user data');
-        return res.data;
-      }),
+    return this.http.patch<User>(`${this.baseUrl}/${id}`, dto, { headers }).pipe(
       catchError(error => {
         console.error('Update user error:', error);
         return throwError(() => error);

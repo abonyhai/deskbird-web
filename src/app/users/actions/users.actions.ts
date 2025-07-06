@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../shared/models/user.models';
+import { User, UpdateUserDto } from '../../shared/models/user.models';
 
 // Load Users
 export const loadUsers = createAction('[Users] Load Users');
@@ -9,7 +9,7 @@ export const loadUsersFailure = createAction('[Users] Load Users Failure', props
 // Edit User
 export const updateUser = createAction(
   '[Users] Update User',
-  props<{ user: User }>()
+  props<{ id: number; dto: UpdateUserDto }>()
 );
 
 export const updateUserSuccess = createAction(

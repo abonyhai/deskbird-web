@@ -49,8 +49,8 @@ export class EditUserComponent implements OnChanges {
 
   public onSave(): void {
     if (this.form.valid) {
-      const updatedUser = { ...this.user, ...this.form.value };
-      this.store.dispatch(updateUser({ user: updatedUser }));
+      const dto = this.form.value;
+      this.store.dispatch(updateUser({ id: this.user.id, dto }));
     }
   }
 }

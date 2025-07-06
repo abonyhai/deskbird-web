@@ -5,3 +5,9 @@ export interface User {
   fullName: string;
   role: string;
 }
+
+export interface UpdateUserDto {
+  email?: string;
+  fullName?: string;
+  role?: 'admin' | 'user';
+}
