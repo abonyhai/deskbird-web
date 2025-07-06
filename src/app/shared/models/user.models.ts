@@ -7,4 +7,5 @@ export interface User {
   readonly avatar?: string;
   readonly createdAt: string;
   readonly updatedAt: string;
+  readonly role: string;
 }

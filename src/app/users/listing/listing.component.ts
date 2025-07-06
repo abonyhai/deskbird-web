@@ -9,6 +9,7 @@ import { SelectModule } from 'primeng/select';
 import { User } from '../../shared/models/user.models';
 import { CommonModule } from '@angular/common';
 import { UserRoles } from '../../shared/enums/user.enum';
+import { AuthService } from '../../auth/services/auth.service';
 
 export type UserWithRole = User & { role?: string };
 
@@ -31,6 +32,7 @@ export type UserWithRole = User & { role?: string };
 })
 export class ListingComponent {
   public userRoles = UserRoles;
+  public currentUser$;
   users: UserWithRole[] = [
     {
       id: '1',
@@ -54,7 +56,11 @@ export class ListingComponent {
     },
   ];
 
-  onEditUser(user: UserWithRole): void {
+  constructor(private readonly authService: AuthService) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
+
+  public onEditUser(user: UserWithRole): void {
     // Placeholder for future popup logic
     console.log('Edit user:', user);
   }

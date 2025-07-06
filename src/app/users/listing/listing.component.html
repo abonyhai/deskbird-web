@@ -1,3 +1,4 @@
+@let currentUser = currentUser$ | async;
 <p-table [value]="users" dataKey="id" [tableStyle]="{'min-width': '40rem'}">
   <ng-template #header>
     <tr>
@@ -33,6 +34,7 @@
           (click)="onEditUser(user)"
           text
           severity="secondary"
+          [disabled]="!currentUser || currentUser?.role !== userRoles.Admin"
         ></button>
       </td>
     </tr>
