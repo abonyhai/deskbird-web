@@ -11,4 +11,6 @@ import { CardModule } from 'primeng/card';
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersComponent {}
+export class UsersComponent {
+  constructor() {}
+}

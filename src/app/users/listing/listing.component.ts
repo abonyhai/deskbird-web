@@ -57,7 +57,7 @@ export class ListingComponent extends SubscriptionCleanup implements OnInit {
   public loading$!: Observable<boolean>;
   public error$!: Observable<string | null>;
 
-  public constructor(
+  constructor(
     private readonly store: Store,
     private readonly authService: AuthService,
     private readonly actions$: Actions,
@@ -70,7 +70,6 @@ export class ListingComponent extends SubscriptionCleanup implements OnInit {
     );
     this.loading$ = this.store.select(UsersSelectors.selectUsersLoading);
     this.error$ = this.store.select(UsersSelectors.selectUsersError);
-
     this.actions$.pipe(ofType(updateUserSuccess), takeUntil(this.destroy$)).subscribe(() => {
       this.displayEditDialog = false;
       this.selectedUser = null;

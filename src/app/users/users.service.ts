@@ -9,7 +9,7 @@ import { UpdateUserDto, User } from '../shared/models/user.models';
 export class UsersService {
   private readonly baseUrl: string = `${environment.apiBaseUrl}/users`;
 
-  public constructor(
+  constructor(
     private http: HttpClient,
     private authService: AuthService
   ) {}

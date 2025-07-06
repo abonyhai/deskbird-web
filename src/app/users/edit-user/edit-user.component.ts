@@ -27,17 +27,17 @@ import { updateUser } from '../../users/actions/users.actions';
   styleUrl: './edit-user.component.scss',
 })
 export class EditUserComponent implements OnChanges {
-  @Input() user!: User;
-  form!: FormGroup;
-  userRoles = Object.values(UserRoles);
-  roleOptions = [
+  @Input() public user!: User;
+  public form!: FormGroup;
+  public userRoles = Object.values(UserRoles);
+  public roleOptions = [
     { label: 'Admin', value: UserRoles.Admin },
     { label: 'User', value: UserRoles.User },
   ];
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user) {
       this.form = this.fb.group({
         email: [this.user.email],

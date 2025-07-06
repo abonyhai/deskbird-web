@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   public isLoading = false;
 
-  constructor(
+  public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -105,22 +105,17 @@ export class SignupComponent implements OnInit {
     }, { validators: this.passwordMatchValidator });
   }
 
-  private passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
-    const password = form.get('password');
-    const confirmPassword = form.get('confirmPassword');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      return { passwordMismatch: true };
-    }
-
-    return null;
-  }
-
   private markFormGroupTouched(): void {
     Object.keys(this.signupForm.controls).forEach((key: string): void => {
       const control = this.signupForm.get(key);
       control?.markAsTouched();
     });
+  }
+
+  private passwordMatchValidator(formGroup: FormGroup): null | object {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
   public get firstNameControl() {

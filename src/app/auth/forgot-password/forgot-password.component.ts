@@ -34,7 +34,7 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent {
-  forgotPasswordForm: FormGroup;
+  public forgotPasswordForm: FormGroup;
   public isLoading: boolean = false;
   public isSubmitted: boolean = false;
 
@@ -44,7 +44,7 @@ export class ForgotPasswordComponent {
     });
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     // Handle forgot password
   }
 

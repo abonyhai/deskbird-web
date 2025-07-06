@@ -35,9 +35,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  // Traditional form and state
   public loginForm!: FormGroup;
-  public isLoading = false;
+  public isLoading: boolean = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -51,23 +50,16 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    this.markFormGroupTouched();
     if (this.loginForm.invalid) {
-      this.markFormGroupTouched();
       return;
     }
-
     this.isLoading = true;
-    const loginData: LoginRequest = this.loginForm.value;
-
-    this.authService.login(loginData).subscribe({
-      next: (response: ApiResponse<AuthResponse>): void => {
+    const loginRequest: LoginRequest = this.loginForm.value;
+    this.authService.login(loginRequest).subscribe({
+      next: (response: ApiResponse<AuthResponse>) => {
         this.isLoading = false;
         if (response.success && response.data) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Login successful!',
-          });
           this.router.navigate(['/']);
         } else {
           this.handleLoginError(response.message || 'Login failed');
@@ -77,14 +69,6 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
         this.handleLoginError('An error occurred during login. Please try again.');
       },
-    });
-  }
-
-  private handleLoginError(message: string): void {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Login Failed',
-      detail: message,
     });
   }
 
@@ -102,8 +86,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public get emailControl() {
-    return this.loginForm.get('email');
+  private handleLoginError(message: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Login Failed',
+      detail: message,
+    });
   }
 
   public get passwordControl() {
