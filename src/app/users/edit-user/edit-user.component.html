@@ -1,4 +1,4 @@
-<form *ngIf="form" [formGroup]="form" class="p-fluid edit-form">
+<form *ngIf="form" [formGroup]="form" class="p-fluid edit-form" (ngSubmit)="onSave()">
   <div class="field edit-user-field">
     <p-floatlabel variant="on">
       <input

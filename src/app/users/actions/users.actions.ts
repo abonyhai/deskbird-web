@@ -7,9 +7,20 @@ export const loadUsersSuccess = createAction('[Users] Load Users Success', props
 export const loadUsersFailure = createAction('[Users] Load Users Failure', props<{ error: string }>());
 
 // Edit User
-export const updateUser = createAction('[Users] Update User', props<{ user: User }>());
-export const updateUserSuccess = createAction('[Users] Update User Success', props<{ user: User }>());
-export const updateUserFailure = createAction('[Users] Update User Failure', props<{ error: string }>());
+export const updateUser = createAction(
+  '[Users] Update User',
+  props<{ user: User }>()
+);
+
+export const updateUserSuccess = createAction(
+  '[Users] Update User Success',
+  props<{ user: User }>()
+);
+
+export const updateUserFailure = createAction(
+  '[Users] Update User Failure',
+  props<{ error: any }>()
+);
 
 // General
 export const clearUsersError = createAction('[Users] Clear Error');

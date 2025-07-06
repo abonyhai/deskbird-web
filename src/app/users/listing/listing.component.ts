@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -18,6 +18,10 @@ import * as UsersSelectors from '../selectors/users.selectors';
 import { AuthService } from '../../auth/services/auth.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@ngneat/transloco';
+import { Actions, ofType } from '@ngrx/effects';
+import { updateUserSuccess } from '../actions/users.actions';
+import { SubscriptionCleanup } from '../../shared/utils/subscription-cleanup';
+import { takeUntil } from 'rxjs/operators';
 
 export type UserWithRole = User & { role?: string };
 
@@ -42,7 +46,7 @@ export type UserWithRole = User & { role?: string };
   styleUrl: './listing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListingComponent implements OnInit {
+export class ListingComponent extends SubscriptionCleanup implements OnInit {
   public userRoles = UserRoles;
   public currentUser$;
   public displayEditDialog = false;
@@ -52,11 +56,21 @@ export class ListingComponent implements OnInit {
   public loading$!: Observable<boolean>;
   public error$!: Observable<string | null>;
 
-  public constructor(private readonly store: Store, private readonly authService: AuthService) {
+  public constructor(private readonly store: Store, private readonly authService: AuthService, private readonly actions$: Actions, private readonly changeDetectorRef: ChangeDetectorRef) {
+    super();
     this.currentUser$ = this.authService.currentUser$;
     this.users$ = this.store.select(UsersSelectors.selectUsers);
     this.loading$ = this.store.select(UsersSelectors.selectUsersLoading);
     this.error$ = this.store.select(UsersSelectors.selectUsersError);
+
+    this.actions$.pipe(
+      ofType(updateUserSuccess),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.displayEditDialog = false;
+      this.selectedUser = null;
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   public ngOnInit(): void {

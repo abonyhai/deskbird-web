@@ -8,6 +8,8 @@ import { SelectModule } from 'primeng/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { Store } from '@ngrx/store';
+import { updateUser } from '../../users/actions/users.actions';
 
 @Component({
   selector: 'app-edit-user',
@@ -33,7 +35,7 @@ export class EditUserComponent implements OnChanges {
     { label: 'User', value: UserRoles.User },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user) {
@@ -42,6 +44,13 @@ export class EditUserComponent implements OnChanges {
         fullName: [this.user.fullName],
         role: [this.user.role || UserRoles.User],
       });
+    }
+  }
+
+  public onSave(): void {
+    if (this.form.valid) {
+      const updatedUser = { ...this.user, ...this.form.value };
+      this.store.dispatch(updateUser({ user: updatedUser }));
     }
   }
 }
