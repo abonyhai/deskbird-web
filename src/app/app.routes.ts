@@ -28,22 +28,14 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'users',
         pathMatch: 'full',
       },
       {
-        path: 'home',
-        loadComponent: () => import('./home/home.component').then((m) => m.HomeComponent),
+        path: 'users',
+        loadComponent: () => import('./users/users.component').then((m) => m.UsersComponent),
       },
       // Add more child routes here for other application features
-      // {
-      //   path: 'dashboard',
-      //   loadComponent: () => import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
-      // },
-      // {
-      //   path: 'profile',
-      //   loadComponent: () => import('./profile/profile.component').then((m) => m.ProfileComponent),
-      // },
     ],
   },
 

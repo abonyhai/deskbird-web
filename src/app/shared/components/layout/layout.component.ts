@@ -25,7 +25,7 @@ export class LayoutComponent {
 
   public get menubarItems(): MenuItem[] {
     return [
-      { label: 'Home', icon: 'pi pi-home' },
+      { label: 'Users', icon: 'pi pi-users' },
     ];
   }
 }
