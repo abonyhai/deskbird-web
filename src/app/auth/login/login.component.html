@@ -50,8 +50,8 @@
           type="submit"
           [label]="t('AUTH.LOGIN.SIGN_IN_BUTTON')"
           class="mb-2 w-full action-button"
-          [loading]="isLoading"
-          [disabled]="loginForm.invalid || isLoading"
+          [loading]="isLoading$ | async"
+          [disabled]="loginForm.invalid || (isLoading$ | async)"
         ></p-button>
         <div class="text-center mt-2 w-full">
           <span>{{ t('AUTH.LOGIN.NO_ACCOUNT_TEXT') }}</span>

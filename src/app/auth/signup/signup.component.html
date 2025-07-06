@@ -87,7 +87,9 @@
         }
       </div>
       <div class="flex flex-column field mb-3 w-full">
-        <label for="confirmPassword" class="mb-1">{{ t('AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL') }}</label>
+        <label for="confirmPassword" class="mb-1">{{
+          t('AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL')
+        }}</label>
         <p-password
           id="confirmPassword"
           formControlName="confirmPassword"
@@ -117,10 +119,10 @@
           [label]="t('AUTH.SIGNUP.CREATE_ACCOUNT_BUTTON')"
           icon="pi pi-user-plus"
           class="mb-2 w-full action-button"
-          [loading]="isLoading"
-          [disabled]="signupForm.invalid || isLoading"
+          [loading]="isLoading$ | async"
+          [disabled]="signupForm.invalid || (isLoading$ | async)"
         ></p-button>
-      </div>
+      </div>Ø
     </form>
     <div class="text-center mt-2 w-full">
       <span>{{ t('AUTH.SIGNUP.ALREADY_HAVE_ACCOUNT') }}</span>
