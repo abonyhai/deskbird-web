@@ -28,7 +28,7 @@ export class LayoutComponent {
 
   public get menubarItems(): MenuItem[] {
     return [
-      { label: this.translocoService.translate('LAYOUT.MENU.USERS'), icon: 'pi pi-users', route: '/users' },
+      { label: this.translocoService ? this.translocoService.translate('LAYOUT.MENU.USERS'): 'Users', icon: 'pi pi-users', route: '/users' },
     ];
   }
 
