@@ -6,6 +6,7 @@ import { ApiService } from '../../shared/services/api.service';
 import { AuthResponse } from '../models/auth.models';
 import { LoginRequest } from '../models/login-request.model';
 import { RegisterRequest } from '../models/register-request.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,10 @@ export class AuthService {
   public readonly currentUser$ = this.currentUserSubject.asObservable();
   public readonly isLoading$ = this.isLoadingSubject.asObservable();
 
-  constructor(private readonly apiService: ApiService) {
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly router: Router
+  ) {
     this.loadUserFromStorage();
   }
 
@@ -52,6 +56,7 @@ export class AuthService {
       localStorage.removeItem('user');
     }
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   public getCurrentUser(): User | null {

@@ -17,6 +17,7 @@ import * as UsersActions from '../actions/users.actions';
 import * as UsersSelectors from '../selectors/users.selectors';
 import { AuthService } from '../../auth/services/auth.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export type UserWithRole = User & { role?: string };
 
@@ -34,7 +35,8 @@ export type UserWithRole = User & { role?: string };
     SelectModule,
     DialogModule,
     EditUserComponent,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    TranslocoModule
   ],
   templateUrl: './listing.component.html',
   styleUrl: './listing.component.scss',
@@ -59,6 +61,9 @@ export class ListingComponent implements OnInit {
 
   public ngOnInit(): void {
     this.store.dispatch(UsersActions.loadUsers());
+    this.users$.subscribe((users) => {
+      console.log(users)
+    })
   }
 
   public onEditUser(user: UserWithRole): void {

@@ -25,7 +25,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './edit-user.component.scss',
 })
 export class EditUserComponent implements OnChanges {
-  @Input() user!: User & { role?: string };
+  @Input() user!: User;
   form!: FormGroup;
   userRoles = Object.values(UserRoles);
   roleOptions = [
@@ -39,8 +39,7 @@ export class EditUserComponent implements OnChanges {
     if (changes['user'] && this.user) {
       this.form = this.fb.group({
         email: [this.user.email],
-        firstName: [this.user.firstName],
-        lastName: [this.user.lastName],
+        fullName: [this.user.fullName],
         role: [this.user.role || UserRoles.User],
       });
     }

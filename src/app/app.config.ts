@@ -10,7 +10,8 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { provideTransloco } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from './transloco.loader';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpRequestInterceptor } from './shared/interceptors/http.interceptor';
 import { usersReducer } from './users/reducers/users.reducer';
 import { UsersEffects } from './users/effects/users.effects';
@@ -22,7 +23,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideStore({ users: usersReducer }),
     provideEffects([UsersEffects]),
-    provideHttpClient(withInterceptors([HttpRequestInterceptor])),
+    provideHttpClient(),
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     providePrimeNG({
       theme: {
         preset: Lara,

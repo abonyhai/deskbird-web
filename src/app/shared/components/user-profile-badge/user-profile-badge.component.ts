@@ -5,6 +5,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { PopoverModule } from 'primeng/popover';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-user-profile-badge',
@@ -23,8 +24,9 @@ import { PopoverModule } from 'primeng/popover';
 export class UserProfileBadgeComponent {
   @Input() public fullName: string = '';
 
+  constructor(private readonly authService: AuthService) {}
+
   public onLogout(): void {
-    // TODO: Implement actual logout logic
-    console.log('Logout clicked');
+    this.authService.logout();
   }
 }
