@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { RegisterRequest } from '../models/register-request.model';
 import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-signup',
@@ -27,6 +28,7 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
     CommonModule,
     RouterModule,
     AuthLayoutComponent,
+    FloatLabelModule,
   ],
   providers: [MessageService],
   templateUrl: './signup.component.html',
@@ -34,7 +36,7 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent implements OnInit {
-  public signupForm!: FormGroup;
+  signupForm: FormGroup;
   public isLoading = false;
 
   constructor(
@@ -42,7 +44,14 @@ export class SignupComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly messageService: MessageService,
-  ) {}
+  ) {
+    this.signupForm = this.formBuilder.group({
+      email: [''],
+      firstName: [''],
+      lastName: [''],
+      password: [''],
+    });
+  }
 
   public ngOnInit(): void {
     this.initForm();

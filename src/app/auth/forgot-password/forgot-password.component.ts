@@ -1,14 +1,15 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
+import { TranslocoModule } from '@ngneat/transloco';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { TranslocoModule } from '@ngneat/transloco';
-import { CommonModule } from '@angular/common';
 import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 @Component({
@@ -25,6 +26,7 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
     CommonModule,
     RouterModule,
     AuthLayoutComponent,
+    FloatLabelModule,
   ],
   providers: [MessageService],
   templateUrl: './forgot-password.component.html',
@@ -32,29 +34,18 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent {
-  public forgotPasswordForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   public isLoading: boolean = false;
   public isSubmitted: boolean = false;
 
-  constructor(private readonly formBuilder: FormBuilder) {
-    this.forgotPasswordForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+  constructor(private fb: FormBuilder) {
+    this.forgotPasswordForm = this.fb.group({
+      email: [''],
     });
   }
 
-  public onSubmit(): void {
-    if (this.forgotPasswordForm.valid) {
-      this.isLoading = true;
-      this.isSubmitted = true;
-
-      // TODO: Implement forgot password logic
-      console.log('Forgot password form submitted:', this.forgotPasswordForm.value);
-
-      // Simulate API call
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 2000);
-    }
+  onSubmit(): void {
+    // Handle forgot password
   }
 
   public get emailField() {

@@ -13,6 +13,7 @@ import { ApiResponse } from '../../shared/models/common.models';
 import { AuthResponse } from '../models/auth.models';
 import { TranslocoModule } from '@ngneat/transloco';
 import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
     ToastModule,
     TranslocoModule,
     AuthLayoutComponent,
+    FloatLabelModule,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',

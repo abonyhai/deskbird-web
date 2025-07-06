@@ -1,131 +1,61 @@
 <ng-container *transloco="let t">
   <app-auth-layout [title]="t('AUTH.SIGNUP.TITLE')">
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="w-full">
-      <div class="flex flex-column field mb-3 w-full">
-        <label for="firstName" class="mb-1">{{ t('AUTH.SIGNUP.FIRST_NAME_LABEL') }}</label>
-        <input
-          id="firstName"
-          type="text"
-          pInputText
-          formControlName="firstName"
-          [placeholder]="t('AUTH.SIGNUP.FIRST_NAME_PLACEHOLDER')"
-          autocomplete="given-name"
-          class="w-full"
-        />
-        @if (firstNameControl?.invalid && firstNameControl?.touched) {
-          <small class="p-error">
-            @if (firstNameControl?.errors?.['required']) {
-              {{ t('AUTH.SIGNUP.FIRST_NAME_REQUIRED') }}
-            } @else if (firstNameControl?.errors?.['minlength']) {
-              {{ t('AUTH.SIGNUP.FIRST_NAME_MIN_LENGTH') }}
-            }
-          </small>
-        }
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="p-fluid signup-form flex flex-column gap-2">
+      <div class="field signup-field">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="off"
+          />
+          <label for="email">Email</label>
+        </p-floatlabel>
       </div>
-      <div class="flex flex-column field mb-3 w-full">
-        <label for="lastName" class="mb-1">{{ t('AUTH.SIGNUP.LAST_NAME_LABEL') }}</label>
-        <input
-          id="lastName"
-          type="text"
-          pInputText
-          formControlName="lastName"
-          [placeholder]="t('AUTH.SIGNUP.LAST_NAME_PLACEHOLDER')"
-          autocomplete="family-name"
-          class="w-full"
-        />
-        @if (lastNameControl?.invalid && lastNameControl?.touched) {
-          <small class="p-error">
-            @if (lastNameControl?.errors?.['required']) {
-              {{ t('AUTH.SIGNUP.LAST_NAME_REQUIRED') }}
-            } @else if (lastNameControl?.errors?.['minlength']) {
-              {{ t('AUTH.SIGNUP.LAST_NAME_MIN_LENGTH') }}
-            }
-          </small>
-        }
+      <div class="field signup-field">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            autocomplete="off"
+          />
+          <label for="firstName">First Name</label>
+        </p-floatlabel>
       </div>
-      <div class="flex flex-column field mb-3 w-full">
-        <label for="email" class="mb-1">{{ t('AUTH.SIGNUP.EMAIL_LABEL') }}</label>
-        <input
-          id="email"
-          type="email"
-          pInputText
-          formControlName="email"
-          [placeholder]="t('AUTH.SIGNUP.EMAIL_PLACEHOLDER')"
-          autocomplete="email"
-          class="w-full"
-        />
-        @if (emailControl?.invalid && emailControl?.touched) {
-          <small class="p-error">
-            @if (emailControl?.errors?.['required']) {
-              {{ t('AUTH.SIGNUP.EMAIL_REQUIRED') }}
-            } @else if (emailControl?.errors?.['email']) {
-              {{ t('AUTH.SIGNUP.EMAIL_INVALID') }}
-            }
-          </small>
-        }
+      <div class="field signup-field">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            autocomplete="off"
+          />
+          <label for="lastName">Last Name</label>
+        </p-floatlabel>
       </div>
-      <div class="flex flex-column field mb-3 w-full">
-        <label for="password" class="mb-1">{{ t('AUTH.SIGNUP.PASSWORD_LABEL') }}</label>
-        <p-password
-          id="password"
-          formControlName="password"
-          [placeholder]="t('AUTH.SIGNUP.PASSWORD_PLACEHOLDER')"
-          [toggleMask]="true"
-          [feedback]="true"
-          class="w-full full-width-pass-input"
-          [inputStyle]="{ width: '100%' }"
-          autocomplete="new-password"
-        ></p-password>
-        @if (passwordControl?.invalid && passwordControl?.touched) {
-          <small class="p-error">
-            @if (passwordControl?.errors?.['required']) {
-              {{ t('AUTH.SIGNUP.PASSWORD_REQUIRED') }}
-            } @else if (passwordControl?.errors?.['minlength']) {
-              {{ t('AUTH.SIGNUP.PASSWORD_MIN_LENGTH') }}
-            }
-          </small>
-        }
+      <div class="field signup-field">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="off"
+          />
+          <label for="password">Password</label>
+        </p-floatlabel>
       </div>
-      <div class="flex flex-column field mb-3 w-full">
-        <label for="confirmPassword" class="mb-1">{{ t('AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL') }}</label>
-        <p-password
-          id="confirmPassword"
-          formControlName="confirmPassword"
-          [placeholder]="t('AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER')"
-          [toggleMask]="true"
-          [feedback]="false"
-          class="w-full full-width-pass-input"
-          [inputStyle]="{ width: '100%' }"
-          autocomplete="new-password"
-        ></p-password>
-        @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched) {
-          <small class="p-error">
-            @if (confirmPasswordControl?.errors?.['required']) {
-              {{ t('AUTH.SIGNUP.CONFIRM_PASSWORD_REQUIRED') }}
-            }
-          </small>
-        }
-        @if (passwordMismatchError) {
-          <small class="p-error">
-            {{ t('AUTH.SIGNUP.PASSWORDS_DO_NOT_MATCH') }}
-          </small>
-        }
+      <div class="mb-3">
+        <p-button label="Sign Up" [raised]="true" severity="success" type="submit" class="w-full" />
       </div>
-      <div class="flex flex-column align-items-center justify-content-center mb-3 w-full mt-5">
-        <p-button
-          type="submit"
-          [label]="t('AUTH.SIGNUP.CREATE_ACCOUNT_BUTTON')"
-          icon="pi pi-user-plus"
-          class="mb-2 w-full action-button"
-          [loading]="isLoading"
-          [disabled]="signupForm.invalid || isLoading"
-        ></p-button>
+      <div class="flex flex-column align-items-center gap-2">
+        <a routerLink="/login" class="text-primary">Already have an account? Login</a>
       </div>
     </form>
-    <div class="text-center mt-2 w-full">
-      <span>{{ t('AUTH.SIGNUP.ALREADY_HAVE_ACCOUNT') }}</span>
-      <a routerLink="/login" class="ml-2 text-primary">{{ t('AUTH.SIGNUP.SIGN_IN_LINK') }}</a>
-    </div>
     <p-toast></p-toast>
   </app-auth-layout>
 </ng-container>
