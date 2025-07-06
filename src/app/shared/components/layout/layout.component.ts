@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
+import { PopoverModule } from 'primeng/popover';
 import { RouterOutlet } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,7 @@ interface MenuItem {
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [MenubarModule, RouterOutlet, TranslocoModule, CommonModule, UserProfileBadgeComponent],
+  imports: [MenubarModule, PopoverModule, RouterOutlet, TranslocoModule, CommonModule, UserProfileBadgeComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +26,6 @@ export class LayoutComponent {
   public get menubarItems(): MenuItem[] {
     return [
       { label: 'Home', icon: 'pi pi-home' },
-      { label: 'About', icon: 'pi pi-info-circle' },
     ];
   }
 }

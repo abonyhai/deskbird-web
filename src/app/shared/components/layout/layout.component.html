@@ -1,14 +1,17 @@
 <ng-container *transloco="let t">
   <p-menubar [model]="menubarItems">
     <ng-template pTemplate="start">
-      <img src="assets/images/deskbird-full-purple.png" alt="logo" class="navbar-logo" />
+      <img
+        src="assets/images/deskbird-full-purple.png"
+        alt="logo"
+        class="navbar-logo"
+        (click)="aboutPopover.toggle($event)"
+      />
     </ng-template>
-    <ng-template pTemplate="end">
-      <app-user-profile-badge
-        class="flex justify-content-center align-items-center"
-        [fullName]="fullName"
-      ></app-user-profile-badge>
-    </ng-template>
+    <app-user-profile-badge
+      class="flex justify-content-center align-items-center"
+      [fullName]="fullName"
+    ></app-user-profile-badge>
   </p-menubar>
 
   <div class="m-4">
@@ -17,3 +20,9 @@
     </div>
   </div>
 </ng-container>
+
+<p-popover #aboutPopover>
+  <div class="p-3">
+    <p class="m-0">I was vibecoded. LOL 😆</p>
+  </div>
+</p-popover>
