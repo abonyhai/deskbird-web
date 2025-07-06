@@ -1,7 +1,7 @@
 {
   "AUTH": {
     "LOGIN": {
-      "WELCOME_TITLE": "WAZAAAAAAP",
+      "WELCOME_TITLE": "Greetings",
       "EMAIL_LABEL": "Email",
       "PASSWORD_LABEL": "Password",
       "FORGOT_PASSWORD": "Forgot password?",
