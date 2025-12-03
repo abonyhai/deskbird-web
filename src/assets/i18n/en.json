@@ -55,7 +55,10 @@
       "ROLE_PLACEHOLDER": "Select a role",
       "SAVE_BUTTON": "Save",
       "DISCARD_BUTTON": "Discard",
-      "DELETE_BUTTON": "Delete"
+      "DELETE_BUTTON": "Delete",
+      "DELETE_CONFIRM_HEADER": "Delete User",
+      "DELETE_CONFIRM_TEXT":"Are you sure you want to delete this user?",
+      "CONFIRM_DELETE": "Confirm"
     }
   },
   "LAYOUT": {
