@@ -54,7 +54,8 @@
       "ROLE_LABEL": "Role",
       "ROLE_PLACEHOLDER": "Select a role",
       "SAVE_BUTTON": "Save",
-      "DISCARD_BUTTON": "Discard"
+      "DISCARD_BUTTON": "Discard",
+      "DELETE_BUTTON": "Delete"
     }
   },
   "LAYOUT": {

@@ -15,8 +15,10 @@
 }
 
 .center-card-logo {
+  width: 150px;
+  height: auto;
+  
   @media screen and (max-width: 600px) {
     width: 100px;
-    height: 100px;
   }
 }
