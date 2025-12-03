@@ -11,6 +11,10 @@ import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
 import { updateUser } from '../../store/users/users.actions';
 import { TranslocoModule } from '@ngneat/transloco';
+import { AuthService } from '../../auth/services/auth.service';
+import { deleteUser } from '../../store/users/users.actions';
+import { Observable } from 'rxjs';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-edit-user',
@@ -23,7 +27,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     FloatLabelModule,
     InputTextModule,
     ButtonModule,
-    TranslocoModule
+    TranslocoModule,
+    DialogModule
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss',
@@ -36,8 +41,16 @@ export class EditUserComponent implements OnChanges {
     { label: 'Admin', value: UserRoles.Admin },
     { label: 'User', value: UserRoles.User },
   ];
+  public currentUser$: Observable<User | null>;
+  public showDeleteConfirm = false;
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private authService: AuthService
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user) {
@@ -54,5 +67,22 @@ export class EditUserComponent implements OnChanges {
       const dto = this.form.value;
       this.store.dispatch(updateUser({ id: this.user.id, dto }));
     }
+  }
+
+  public onDelete(): void {
+    this.showDeleteConfirm = true;
+  }
+
+  public confirmDelete(): void {
+    this.showDeleteConfirm = false;
+    this.store.dispatch(deleteUser({ id: this.user.id }));
+  }
+
+  public cancelDelete(): void {
+    this.showDeleteConfirm = false;
+  }
+
+  public isAdmin(user: User | null): boolean {
+    return !!user && user.role === UserRoles.Admin;
   }
 }

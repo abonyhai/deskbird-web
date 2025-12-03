@@ -22,6 +22,22 @@ export const updateUserFailure = createAction(
   props<{ error: any }>()
 );
 
+// Delete User
+export const deleteUser = createAction(
+  '[Users] Delete User',
+  props<{ id: number }>()
+);
+
+export const deleteUserSuccess = createAction(
+  '[Users] Delete User Success',
+  props<{ id: number }>()
+);
+
+export const deleteUserFailure = createAction(
+  '[Users] Delete User Failure',
+  props<{ error: any }>()
+);
+
 // General
 export const clearUsersError = createAction('[Users] Clear Error');
 export const setSelectedUser = createAction('[Users] Set Selected User', props<{ user: User | null }>());

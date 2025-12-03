@@ -44,4 +44,21 @@ export const usersReducer = createReducer(
     ...state,
     selectedUser: user,
   })),
+  on(UsersActions.deleteUser, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(UsersActions.deleteUserSuccess, (state, { id }) => ({
+    ...state,
+    users: state.users.filter((u) => u.id !== id),
+    loading: false,
+    error: null,
+    selectedUser: null,
+  })),
+  on(UsersActions.deleteUserFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 );

@@ -60,4 +60,23 @@ export class UsersService {
       })
     );
   }
+
+  public deleteUser(id: number): Observable<{ deleted: boolean }> {
+    const token = this.authService.getToken();
+
+    if (!token) {
+      return throwError(() => new Error('No authentication token'));
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.delete<{ deleted: boolean }>(`${this.baseUrl}/${id}`, { headers }).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
 }

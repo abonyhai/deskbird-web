@@ -19,7 +19,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Actions, ofType } from '@ngrx/effects';
-import { updateUserSuccess } from '../../store/users/users.actions';
+import { updateUserSuccess, deleteUserSuccess } from '../../store/users/users.actions';
 import { SubscriptionCleanup } from '../../shared/utils/subscription-cleanup';
 import { takeUntil } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
@@ -70,7 +70,7 @@ export class ListingComponent extends SubscriptionCleanup implements OnInit {
     );
     this.loading$ = this.store.select(UsersSelectors.selectUsersLoading);
     this.error$ = this.store.select(UsersSelectors.selectUsersError);
-    this.actions$.pipe(ofType(updateUserSuccess), takeUntil(this.destroy$)).subscribe(() => {
+    this.actions$.pipe(ofType(updateUserSuccess, deleteUserSuccess), takeUntil(this.destroy$)).subscribe(() => {
       this.displayEditDialog = false;
       this.selectedUser = null;
       this.changeDetectorRef.detectChanges();
